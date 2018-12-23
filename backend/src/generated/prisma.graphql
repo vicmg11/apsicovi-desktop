@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri Dec 21 2018 22:40:30 GMT-0800 (PST)
+# timestamp: Sat Dec 22 2018 22:29:21 GMT-0800 (PST)
 
 type AggregateUser {
   count: Int!
@@ -52,6 +52,11 @@ type PageInfo {
   endCursor: String
 }
 
+enum Permission {
+  ADMIN
+  USER
+}
+
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   user(where: UserWhereUniqueInput!): User
@@ -64,6 +69,11 @@ type Query {
   ): Node
 }
 
+enum Statuses {
+  ACTIVE
+  INACTIVE
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -71,6 +81,13 @@ type Subscription {
 type User implements Node {
   id: ID!
   name: String!
+  email: String!
+  host: String!
+  status: [Statuses!]
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: [Permission!]
 }
 
 """A connection to a list of items."""
@@ -85,6 +102,21 @@ type UserConnection {
 
 input UserCreateInput {
   name: String!
+  email: String!
+  host: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  status: UserCreatestatusInput
+  permissions: UserCreatepermissionsInput
+}
+
+input UserCreatepermissionsInput {
+  set: [Permission!]
+}
+
+input UserCreatestatusInput {
+  set: [Statuses!]
 }
 
 """An edge in a connection."""
@@ -101,6 +133,16 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  email_ASC
+  email_DESC
+  host_ASC
+  host_DESC
+  password_ASC
+  password_DESC
+  resetToken_ASC
+  resetToken_DESC
+  resetTokenExpiry_ASC
+  resetTokenExpiry_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -110,6 +152,13 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   name: String!
+  email: String!
+  host: String!
+  status: [Statuses!]
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: [Permission!]
 }
 
 type UserSubscriptionPayload {
@@ -153,6 +202,21 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  email: String
+  host: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  status: UserUpdatestatusInput
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdatepermissionsInput {
+  set: [Permission!]
+}
+
+input UserUpdatestatusInput {
+  set: [Statuses!]
 }
 
 input UserWhereInput {
@@ -244,6 +308,206 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  host: String
+
+  """All values that are not equal to given value."""
+  host_not: String
+
+  """All values that are contained in given list."""
+  host_in: [String!]
+
+  """All values that are not contained in given list."""
+  host_not_in: [String!]
+
+  """All values less than the given value."""
+  host_lt: String
+
+  """All values less than or equal the given value."""
+  host_lte: String
+
+  """All values greater than the given value."""
+  host_gt: String
+
+  """All values greater than or equal the given value."""
+  host_gte: String
+
+  """All values containing the given string."""
+  host_contains: String
+
+  """All values not containing the given string."""
+  host_not_contains: String
+
+  """All values starting with the given string."""
+  host_starts_with: String
+
+  """All values not starting with the given string."""
+  host_not_starts_with: String
+
+  """All values ending with the given string."""
+  host_ends_with: String
+
+  """All values not ending with the given string."""
+  host_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  resetToken: String
+
+  """All values that are not equal to given value."""
+  resetToken_not: String
+
+  """All values that are contained in given list."""
+  resetToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetToken_not_in: [String!]
+
+  """All values less than the given value."""
+  resetToken_lt: String
+
+  """All values less than or equal the given value."""
+  resetToken_lte: String
+
+  """All values greater than the given value."""
+  resetToken_gt: String
+
+  """All values greater than or equal the given value."""
+  resetToken_gte: String
+
+  """All values containing the given string."""
+  resetToken_contains: String
+
+  """All values not containing the given string."""
+  resetToken_not_contains: String
+
+  """All values starting with the given string."""
+  resetToken_starts_with: String
+
+  """All values not starting with the given string."""
+  resetToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetToken_ends_with: String
+
+  """All values not ending with the given string."""
+  resetToken_not_ends_with: String
+  resetTokenExpiry: String
+
+  """All values that are not equal to given value."""
+  resetTokenExpiry_not: String
+
+  """All values that are contained in given list."""
+  resetTokenExpiry_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetTokenExpiry_not_in: [String!]
+
+  """All values less than the given value."""
+  resetTokenExpiry_lt: String
+
+  """All values less than or equal the given value."""
+  resetTokenExpiry_lte: String
+
+  """All values greater than the given value."""
+  resetTokenExpiry_gt: String
+
+  """All values greater than or equal the given value."""
+  resetTokenExpiry_gte: String
+
+  """All values containing the given string."""
+  resetTokenExpiry_contains: String
+
+  """All values not containing the given string."""
+  resetTokenExpiry_not_contains: String
+
+  """All values starting with the given string."""
+  resetTokenExpiry_starts_with: String
+
+  """All values not starting with the given string."""
+  resetTokenExpiry_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetTokenExpiry_ends_with: String
+
+  """All values not ending with the given string."""
+  resetTokenExpiry_not_ends_with: String
 }
 
 input UserWhereUniqueInput {

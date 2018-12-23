@@ -1,5 +1,21 @@
+enum Permission {
+  ADMIN
+  USER
+}
+
+enum Statuses {
+  ACTIVE
+  INACTIVE
+}
+
 type User{
   id: ID! @unique
   name: String!
   email: String!
+  host: String!
+  status: [Statuses]
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: [Permission]
 }
