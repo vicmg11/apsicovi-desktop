@@ -1,6 +1,8 @@
+import Visitantes from '../components/Visitantes';
+
 const Visitas = props => (
   <div>
-    <p>Visitantes Pre autorizadas!</p>
+    <Visitantes />
   </div>
 )
 

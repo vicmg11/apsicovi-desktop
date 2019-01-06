@@ -1,6 +1,8 @@
+import CrearVisitante from '../components/CrearVisitante';
+
 const Registro = props => (
   <div>
-    <p>Registro!</p>
+    <CrearVisitante />
   </div>
 )
 

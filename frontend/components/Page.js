@@ -8,10 +8,14 @@ const theme = {
 	black: '#393939',
 	grey: '#3A3A3A',
 	blue: '#0000ff',
+	buttonBlue: '#22568D',
+	lightBlue: '#3498DB90',
+	darkBlue: '#2C3E50',
 	deepBlue: '#00bfff',
 	lightgrey: '#E1E1E1',
 	offWhite: '#EDEDED',
 	maxWidth: '1000px',
+	radiusBorder: '10px',
 	bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)'
 };
 
@@ -23,7 +27,7 @@ const StyledPage = styled.div`
 const InnerContent = styled.div`
 	max-width: ${(props) => props.theme.maxWidth};
 	margin: 0 auto;
-	padding: 2rem;
+	padding: 1rem;
 `;
 
 injectGlobal`
@@ -45,7 +49,7 @@ injectGlobal`
     margin: 0;
     font-size: 1.5rem;
     line-height: 2;
-    font-family: 'radnika_next';
+    font-family: sans-serif;
   }
   a {
     text-decoration: none;

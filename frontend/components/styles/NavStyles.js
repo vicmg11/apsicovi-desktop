@@ -1,67 +1,88 @@
 import styled from 'styled-components';
 
 const NavStyles = styled.ul`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-self: end;
-  font-size: 2rem;
-  a,
-  button {
-    padding: 1rem 3rem;
-    display: flex;
-    align-items: center;
-    position: relative;
-    text-transform: uppercase;
-    font-weight: 900;
-    font-size: 1em;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    @media (max-width: 700px) {
-      font-size: 10px;
-      padding: 0 10px;
-    }
-    &:before {
-      content: '';
-      width: 2px;
-      background: ${props => props.theme.lightgrey};
-      height: 100%;
-      left: 0;
-      position: absolute;
-      transform: skew(-20deg);
-      top: 0;
-      bottom: 0;
-    }
-    &:after {
-      height: 2px;
-      background: red;
-      content: '';
-      width: 0;
-      position: absolute;
-      transform: translateX(-50%);
-      transition: width 0.4s;
-      transition-timing-function: cubic-bezier(1, -0.65, 0, 2.31);
-      left: 50%;
-      margin-top: 2rem;
-    }
-    &:hover,
-    &:focus {
-      outline: none;
-      &:after {
-        width: calc(100% - 60px);
-      }
-    @media (max-width: 700px) {
-        width: calc(100% - 10px);
-    }
-    }
-  }
-  @media (max-width: 1300px) {
-    border-top: 1px solid ${props => props.theme.lightgrey};
-    width: 100%;
-    justify-content: center;
-    font-size: 1.5rem;
-  }
+	margin: 0;
+	padding: 0;
+	justify-self: end;
+	font-size: 1.2rem;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 5px;
+	grid-auto-rows: minmax(100px, auto);
+	a,
+	button {
+		padding: 1rem 2rem;
+		display: flex;
+		align-items: center;
+		position: relative;
+		font-size: 1.2em;
+		background: none;
+		border: 0;
+		cursor: pointer;
+    background: linear-gradient(#3b73a6, #255186);
+    color: #ffffff;
+    margin-bottom: 10px;
+		@media (max-width: 700px) {
+			font-size: 1.2em;
+		}
+		div {
+			width: 100%;
+			line-height: 20px;
+			text-align: center;
+		}
+		&:hover,
+		&:focus {
+			outline: none;
+			background-color: ${(props) => props.theme.lightBlue};
+		}
+	}
+	.a {
+		grid-column: 1 / 3;
+		grid-row: 1;
+    border-top-left-radius: ${(props) => props.theme.radiusBorder};
+    border-top-right-radius: ${(props) => props.theme.radiusBorder};
+	}
+	.b {
+		grid-column: 1;
+		grid-row: 2;
+    border-top-right-radius: ${(props) => props.theme.radiusBorder};
+    border-bottom-left-radius: ${(props) => props.theme.radiusBorder};
+	}
+	.c {
+		grid-column: 2;
+		grid-row: 2;
+    border-top-left-radius: ${(props) => props.theme.radiusBorder};
+    border-bottom-right-radius: ${(props) => props.theme.radiusBorder};
+	}
+	.d {
+		grid-column: 1;
+		grid-row: 3;
+    border-top-right-radius: ${(props) => props.theme.radiusBorder};
+    border-bottom-left-radius: ${(props) => props.theme.radiusBorder};
+	}
+	.e {
+		grid-column: 2;
+		grid-row: 3;
+    border-top-left-radius: ${(props) => props.theme.radiusBorder};
+    border-bottom-right-radius: ${(props) => props.theme.radiusBorder};
+	}
+	.f {
+		grid-column: 1;
+		grid-row: 4;
+    border-top-right-radius: ${(props) => props.theme.radiusBorder};
+    border-bottom-left-radius: ${(props) => props.theme.radiusBorder};
+	}
+	.g {
+		grid-column: 2;
+		grid-row: 4;
+    border-top-left-radius: ${(props) => props.theme.radiusBorder};
+    border-bottom-right-radius: ${(props) => props.theme.radiusBorder};
+	}
+	@media (max-width: 1300px) {
+		width: 100%;
+		justify-content: center;
+		font-size: 1.5rem;
+	}
 `;
 
 export default NavStyles;
