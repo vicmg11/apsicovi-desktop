@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const NavStyles = styled.ul`
-	margin: 0;
+	margin: 20px 0px;
 	padding: 0;
 	justify-self: end;
 	font-size: 1.2rem;

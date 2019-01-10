@@ -1,21 +1,46 @@
 enum Permission {
   ADMIN
+  MAINUSER
   USER
 }
 
-enum Statuses {
-  ACTIVE
-  INACTIVE
-}
+# enum Status {
+#   ACTIVE
+#   INACTIVE
+# }
+# enum visitorTypes {
+#   PREAUTORIZADO
+#   FRECUENTE
+#   SERVICIO
+#   DOMESTICO
+# }
 
-type User{
+type User {
   id: ID! @unique
+  streetId: Int!
   name: String!
   email: String!
+  price: Int!
   host: String!
-  status: [Statuses]
+  expirationDate: DateTime
+  database: String!
+  status: String!
   password: String!
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission]
+}
+
+type Visitor {
+  id: ID! @unique
+  name: String!
+  userType: String! 
+  image: String
+  largeImage: String
+  description: String
+  status: String! 
+  expectedStartTime: String
+  expectedEndTime: String
+  expectedStartDate: String
+  #user: User!
 }

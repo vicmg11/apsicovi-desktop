@@ -1,6 +1,8 @@
+import VisitaAutorizada from '../components/VisitanteAutorizado';
+
 const Autorizado = props => (
   <div>
-    <p>Autorizado Page!</p>
+    <VisitaAutorizada />
   </div>
 )
 

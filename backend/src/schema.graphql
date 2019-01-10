@@ -1,7 +1,19 @@
+#import * from './generated/prisma.graphql'
+
 type Mutation {
-  hi: String
+	createVisitor(
+		name: String
+		userType: String
+		image: String
+		largeImage: String
+		description: String
+		status: String
+		expectedStartTime: String
+		expectedEndTime: String
+		expectedStartDate: String
+	): Visitor!
 }
 
 type Query {
-  hi: String
+	visitantes: [Visitor]!
 }

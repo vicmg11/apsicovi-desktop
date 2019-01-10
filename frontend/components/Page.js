@@ -20,7 +20,12 @@ const theme = {
 };
 
 const StyledPage = styled.div`
-	background: white;
+	background-color: #f4f4f4;
+	/* background-image: url("../static/sky1.jpeg");  The image used */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+	background-size: cover; /* Resize the background image to cover the entire container */
+	height: 100vh;
 	color: ${(props) => props.theme.black};
 `;
 
@@ -49,7 +54,8 @@ injectGlobal`
     margin: 0;
     font-size: 1.5rem;
     line-height: 2;
-    font-family: sans-serif;
+		font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+		background-color: #f4f4f4;
   }
   a {
     text-decoration: none;
