@@ -104,9 +104,8 @@ class VisitaAutorizada extends Component {
 							// call the mutation
 							const res = await createVisitor();
 							// change them to the single visitor page
-							console.log(res);
 							Router.push({
-								pathname: '/autorizado',
+								pathname: '/visita',
 								query: { id: res.data.createVisitor.id }
 							});
 						}}

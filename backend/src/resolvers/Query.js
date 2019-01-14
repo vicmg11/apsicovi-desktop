@@ -1,8 +1,8 @@
+const { forwardTo } = require('prisma-binding');
+
 const Query = {
-  async visitantes(parent, args, ctx, info) {
-    const visitor = await ctx.db.query.visitors();
-    return visitor;
-  }
+  visitors: forwardTo('db'),
+  visitor: forwardTo('db'),
 };
 
 module.exports = Query;

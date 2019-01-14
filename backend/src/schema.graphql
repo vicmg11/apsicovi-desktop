@@ -1,19 +1,15 @@
 #import * from './generated/prisma.graphql'
 
+type SuccessMessage {
+  message: String
+}
+
 type Mutation {
-	createVisitor(
-		name: String
-		userType: String
-		image: String
-		largeImage: String
-		description: String
-		status: String
-		expectedStartTime: String
-		expectedEndTime: String
-		expectedStartDate: String
-	): Visitor!
+	createVisitor(name: String, userType: String, image: String, largeImage: String, description: String, status: String, expectedStartTime: String, expectedEndTime: String, expectedStartDate: String): Visitor!
+	updateVisitor(id: ID!, name: String, image: String, largeImage: String, description: String, expectedStartTime: String, expectedEndTime: String, expectedStartDate: String): Visitor!
 }
 
 type Query {
-	visitantes: [Visitor]!
+	visitors(where: VisitorWhereInput, orderBy: VisitorOrderByInput, skip: Int, first: Int): [Visitor]!
+	visitor(where: VisitorWhereUniqueInput!): Visitor
 }
