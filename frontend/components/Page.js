@@ -31,17 +31,17 @@ const StyledPage = styled.div`
 
 const InnerContent = styled.div`
 	max-width: ${(props) => props.theme.maxWidth};
-	margin: 0 auto;
+	margin: 38px auto;
 	padding: 1rem;
 `;
 
 injectGlobal`
-  @font-face {
+  /* @font-face {
     font-family: 'radnika_next';
     src: url('/static/radnikanext-medium-webfont.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-  }
+  } */
   html{
     box-sizing: border-box;
     font-size: 10px

@@ -7,19 +7,19 @@ import Error from './ErrorMessage';
 import { DateInput, TimeInput, DateTimeInput, DatesRangeInput } from 'semantic-ui-calendar-react';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
-import styled from 'styled-components';
+import FotoVisitor from './styles/FotoVisitor';
 
 const CREATE_VISIT_AUTH_MUTATION = gql`
-	mutation CREATE_VISIT_AUTH_MUTATION (
+	mutation CREATE_VISIT_AUTH_MUTATION(
 		$name: String!
 		$userType: String
 		$status: String
 		$image: String
 		$largeImage: String
 		$description: String
+		$expectedStartDate: String
 		$expectedStartTime: String
 		$expectedEndTime: String
-		$expectedStartDate: String
 	) {
 		createVisitor(
 			name: $name
@@ -28,27 +28,13 @@ const CREATE_VISIT_AUTH_MUTATION = gql`
 			image: $image
 			largeImage: $largeImage
 			description: $description
+			expectedStartDate: $expectedStartDate
 			expectedStartTime: $expectedStartTime
 			expectedEndTime: $expectedEndTime
-			expectedStartDate: $expectedStartDate
 		) {
 			id
 		}
 	}
-`;
-
-const Foto = styled.div`
-	cursor: pointer;
-	padding-top: 6px;
-	color: #202020;
-	text-align: center;
-	position: absolute;
-	top: 146px;
-	left: 82px;
-	height: 30px;
-	width: 30px;
-	background-color: #e8e8e8;
-	border-radius: 360px;
 `;
 
 class VisitaAutorizada extends Component {
@@ -59,9 +45,9 @@ class VisitaAutorizada extends Component {
 		image: '',
 		largeImage: '',
 		description: '',
-		expectedStartTime: '',
-		expectedEndTime: '',
 		expectedStartDate: '',
+		expectedStartTime: '',
+		expectedEndTime: ''
 	};
 
 	handleChange = (e) => {
@@ -92,6 +78,7 @@ class VisitaAutorizada extends Component {
 			largeImage: file.eager[0].secure_url
 		});
 	};
+
 	render() {
 		return (
 			<Mutation mutation={CREATE_VISIT_AUTH_MUTATION} variables={this.state}>
@@ -103,10 +90,14 @@ class VisitaAutorizada extends Component {
 							e.preventDefault();
 							// call the mutation
 							const res = await createVisitor();
-							// change them to the single visitor page
+							// Change them to the single visitor page
+							// Router.push({
+							// 	pathname: '/visita',
+							// 	query: { id: res.data.createVisitor.id }
+							// });
+							// Display list of visitors
 							Router.push({
-								pathname: '/visita',
-								query: { id: res.data.createVisitor.id }
+								pathname: '/lista'
 							});
 						}}
 					>
@@ -120,29 +111,18 @@ class VisitaAutorizada extends Component {
 									id="file"
 									name="file"
 									placeholder="Foto del Visitante"
-									required
 									onChange={this.uploadFile}
 								/>
-								{!this.state.image && (
-									<img
-										className="ui circular bordered image"
-										width="100"
-										src="../static/user_gray.png"
-										alt="Agrega una foto"
-									/>
-								)}
-								{this.state.image && (
-									<img
-										className="ui circular image"
-										width="100"
-										height="100"
-										src={this.state.image}
-										alt="Foto Previa"
-									/>
-								)}
-								<Foto>
+								<img
+									className="ui circular bordered image"
+									width="100"
+									height="100"
+									src={this.state.image || '../static/user_gray.png'}
+									alt="Agrega una foto"
+								/>
+								<FotoVisitor>
 									<Icon name="camera" />
-								</Foto>
+								</FotoVisitor>
 							</label>
 							<label htmlFor="name">
 								Nombre

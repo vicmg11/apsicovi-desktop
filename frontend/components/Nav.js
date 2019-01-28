@@ -5,7 +5,7 @@ import {Icon} from 'semantic-ui-react';
 
 const Nav = () => (
 	<NavStyles>
-    <Link href="/autorizado">
+    <Link href="/lista">
 			<a className='a'><div><Icon name="id card outline"/> Visitantes Preautorizados</div></a>
 		</Link>
     <Link href="/frecuente">

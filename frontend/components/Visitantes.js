@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
+import Router from 'next/router';
+import 'semantic-ui-css/semantic.min.css';
+import { Icon } from 'semantic-ui-react';
 import Visitante from './Visitante';
-//import Pagination from './Pagination';
 import { perPage } from '../config';
 
 const ALL_VISITORS_QUERY = gql`
@@ -16,37 +18,81 @@ const ALL_VISITORS_QUERY = gql`
 			image
 			largeImage
 			description
+			expectedStartDate
 			expectedStartTime
 			expectedEndTime
-			expectedStartDate
     }
   }
 `;
 
-const Center = styled.div`text-align: center;`;
+const Center = styled.div`
+	h1 {
+		text-align: center;
+		margin: 10px 0px;
+		border-bottom: 1px solid #ccc !important;
+	}
+	.ui.message {
+		margin: 135px 20px;
+		color: ${(props) => props.theme.buttonBlue};
+	}
+	.alta-visitas {
+		font-size: 2rem;
+		position: fixed;
+		top: 10px;
+		z-index: 4;
+		width: 28px;
+		height: 24px;
+		right: 28px;
+		color: #22568d !important;
+		background: #f4f4f4;
+	}
+`;
 
 const VisitorsList = styled.div`
-	/* display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-gap: 60px;
-	max-width: ${(props) => props.theme.maxWidth};
-	margin: 0 auto; */
-	.card {
-    width: 100% !important;
-  }
-  .ui.button {
-    padding: 15px;
-    font-size: 1.5rem;
-  }
+	.content {
+		padding-left: 1rem !important;
+	}
+	.fix-image, img {
+		width: 90px;
+	}
+	.description {
+		margin-top: 4px !important;
+	}
+	.item {
+		border-bottom: 1px solid #ccc !important;
+	}
+	.ui.two.buttons {
+		margin-bottom: 8px;
+	}
 `;
 
 class Visitantes extends Component {
+	handleVisit = (e) => {
+		Router.push({
+			pathname: '/autorizado'
+		});
+	};
 	render() {
+		const btnAlta = (
+			<div className="alta-visitas" onClick={this.handleVisit}>
+				<Icon name="user plus" />
+			</div>
+		);
+		const message = (
+			<div>
+				{btnAlta}
+				<div className="ui huge floating message">
+					<p>
+						No existen visitantes preautorizados, registralos dando click a <Icon name="user plus" />
+					</p>
+				</div>
+			</div>
+		);
 		return (
 			<Center>
 				<Query
 					query={ALL_VISITORS_QUERY}
-					// fetchPolicy="network-only"
+					fetchPolicy="network-only"
 					variables={{
 						skip: this.props.page * perPage - perPage
 					}}
@@ -54,12 +100,16 @@ class Visitantes extends Component {
 					{({ data, error, loading }) => {
 						if (loading) return <p>Loading...</p>;
 						if (error) return <p>Error: {error.message}</p>;
-						console.log(data);
+						if (!data.visitors.length) return message;
 						return (
 							<VisitorsList>
-								{data.visitors.map((visitante) => (
-									<Visitante visitor={visitante} key={visitante.id} />
-								))}
+								{btnAlta}
+								<h1>Visitantes Preautorizados</h1>
+								<div className="ui unstackable items">
+									{data.visitors.map((visitante) => (
+										<Visitante visitor={visitante} key={visitante.id} />
+									))}
+								</div>
 							</VisitorsList>
 						);
 					}}

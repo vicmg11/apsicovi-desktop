@@ -8,13 +8,13 @@ import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
 
 const SingleItemStyles = styled.div`
-  .card {
-    width: 100% !important;
-  }
-  .ui.button {
-    padding: 15px;
-    font-size: 1.5rem;
-  }
+	.card {
+		width: 100% !important;
+	}
+	.ui.button {
+		padding: 15px;
+		font-size: 1.5rem;
+	}
 `;
 
 const SINGLE_VISITOR_QUERY = gql`
@@ -27,9 +27,9 @@ const SINGLE_VISITOR_QUERY = gql`
 			image
 			largeImage
 			description
+			expectedStartDate
 			expectedStartTime
 			expectedEndTime
-			expectedStartDate
 		}
 	}
 `;
@@ -56,11 +56,11 @@ class SingleVisitor extends Component {
 										<img className="right floated mini ui image" src={visitor.image} />
 										<div className="header">{visitor.name}</div>
 										<div className="meta">Acceso a Visitante Preautorizado</div>
-                    <div className="description">
-                      <div>Fecha: {visitor.expectedStartDate}</div>
-                      <div>Hora: entre {visitor.expectedStartTime} y {visitor.expectedStartTime}</div>
-                      <div>Motivio de la Visita: {visitor.description}</div>
-                    </div>
+										<div className="description">
+											<div><b>Visita esperada:</b> {visitor.expectedStartDate}</div>
+											<div><b>Hora esperada:</b> Entre {visitor.expectedStartTime} y {visitor.expectedEndTime}</div>
+											<div><b>Motivio de la Visita:</b> {visitor.description}</div>
+										</div>
 									</div>
 								</div>
 							</div>

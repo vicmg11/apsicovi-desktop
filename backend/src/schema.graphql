@@ -1,12 +1,32 @@
 #import * from './generated/prisma.graphql'
 
 type SuccessMessage {
-  message: String
+	message: String
 }
 
 type Mutation {
-	createVisitor(name: String, userType: String, image: String, largeImage: String, description: String, status: String, expectedStartTime: String, expectedEndTime: String, expectedStartDate: String): Visitor!
-	updateVisitor(id: ID!, name: String, image: String, largeImage: String, description: String, expectedStartTime: String, expectedEndTime: String, expectedStartDate: String): Visitor!
+	createVisitor(
+		name: String
+		userType: String
+		image: String
+		largeImage: String
+		description: String
+		status: String
+		expectedStartTime: String
+		expectedEndTime: String
+		expectedStartDate: String
+	): Visitor!
+	updateVisitor(
+		id: ID!
+		name: String
+		status: String
+		image: String
+		largeImage: String
+		description: String
+		expectedStartTime: String
+		expectedEndTime: String
+		expectedStartDate: String
+	): Visitor!
 }
 
 type Query {

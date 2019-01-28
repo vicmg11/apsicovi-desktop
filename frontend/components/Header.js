@@ -41,6 +41,12 @@ const Logout = styled.h1`
 `;
 
 const StyledHeader = styled.header`
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	z-index: 3;
+	height: 46px;
+	background-color: #f4f4f4;
 	.bar {
     padding: 0 25px;
     margin: 0 1rem;

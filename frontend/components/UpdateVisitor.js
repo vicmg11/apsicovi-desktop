@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Mutation, Query } from 'react-apollo';
+import { DateInput, TimeInput, DateTimeInput, DatesRangeInput } from 'semantic-ui-calendar-react';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import { DateInput, TimeInput, DateTimeInput, DatesRangeInput } from 'semantic-ui-calendar-react';
+import 'semantic-ui-css/semantic.min.css';
+import { Icon } from 'semantic-ui-react';
+import FotoVisitor from './styles/FotoVisitor';
 
 const SINGLE_VISITOR_QUERY = gql`
 	query SINGLE_VISITOR_QUERY($id: ID!) {
@@ -14,9 +17,9 @@ const SINGLE_VISITOR_QUERY = gql`
 			image
 			largeImage
 			description
+			expectedStartDate
 			expectedStartTime
 			expectedEndTime
-			expectedStartDate
 		}
 	}
 `;
@@ -24,31 +27,34 @@ const UPDATE_VISITOR_MUTATION = gql`
 	mutation UPDATE_VISITOR_MUTATION(
 		$id: ID!
 		$name: String
+		$status: String
 		$image: String
 		$largeImage: String
 		$description: String
+		$expectedStartDate: String
 		$expectedStartTime: String
 		$expectedEndTime: String
-		$expectedStartDate: String
 	) {
 		updateVisitor(
 			id: $id
 			name: $name
+			status: $status
 			image: $image
 			largeImage: $largeImage
 			description: $description
+			expectedStartDate: $expectedStartDate
 			expectedStartTime: $expectedStartTime
 			expectedEndTime: $expectedEndTime
-			expectedStartDate: $expectedStartDate
 		) {
 			id
 			name
+			status
 			image
 			largeImage
 			description
+			expectedStartDate
 			expectedStartTime
 			expectedEndTime
-			expectedStartDate
 		}
 	}
 `;
@@ -60,9 +66,28 @@ class UpdateVisit extends Component {
 		const val = type === 'number' ? parseFloat(value) : value;
 		this.setState({ [name]: val });
 	};
-	handleChangeDt = (event, { name, value }) => {
+
+	handleChangeDt = (event, {name, value }) => {
 		this.setState({ [name]: value });
 	};
+
+	uploadFile = async (e) => {
+		const files = e.target.files;
+		const data = new FormData();
+		data.append('file', files[0]);
+		data.append('upload_preset', 'sicovi');
+		const res = await fetch('https://api.cloudinary.com/v1_1/ddltr8h2k/image/upload', {
+			method: 'POST',
+			body: data
+		});
+		const file = await res.json();
+		console.log(file);
+		this.setState({
+			image: file.secure_url,
+			largeImage: file.eager[0].secure_url
+		});
+	};
+
 	updateVisitor = async (e, updateVisitorMutation) => {
 		e.preventDefault();
 		console.log('Updating Visitor!!');
@@ -73,7 +98,9 @@ class UpdateVisit extends Component {
 				...this.state
 			}
 		});
-		console.log('Updated!!');
+		Router.push({
+			pathname: '/lista'
+		});
 	};
 
 	render() {
@@ -92,8 +119,32 @@ class UpdateVisit extends Component {
 							{(updateVisitor, { loading, error }) => (
 								<Form className="ui form" onSubmit={(e) => this.updateVisitor(e, updateVisitor)}>
 									<Error error={error} />
-									{console.log(data.visitor)}
-									<fieldset disabled={loading} aria-busy={loading}>
+									<h2>Actualiza Visitante Preautorizado</h2>
+									<fieldset className="fields" disabled={loading} aria-busy={loading}>
+										<label htmlFor="file">
+											Foto
+											<input
+												type="file"
+												id="file"
+												name="file"
+												placeholder="Foto del Visitante"
+												onChange={this.uploadFile}
+											/>
+											<img
+												className="ui circular bordered image"
+												width="100"
+												height="100"
+												src={
+													this.state.image ||
+													data.visitor.image ||
+													'../static/user_gray.png'
+												}
+												alt="Agrega una foto"
+											/>
+											<FotoVisitor>
+												<Icon name="camera" />
+											</FotoVisitor>
+										</label>
 										<label htmlFor="name">
 											Nombre
 											<input
@@ -108,12 +159,12 @@ class UpdateVisit extends Component {
 										</label>
 
 										<label htmlFor="expectedStartDate">
-											Fecha de Visita
-											<DateInput
+											Hora Inicial de Visita
+											<DateTimeInput
 												name="expectedStartDate"
-												placeholder="Fecha de Visita"
+												placeholder="Hora Inicial de Visita"
 												required
-												value={data.visitor.expectedStartDate}
+												value={this.state.expectedStartDate || data.visitor.expectedStartDate}
 												iconPosition="left"
 												onChange={this.handleChangeDt}
 											/>
@@ -125,7 +176,7 @@ class UpdateVisit extends Component {
 												name="expectedStartTime"
 												placeholder="Hora Inicial de Visita"
 												required
-												value={data.visitor.expectedStartTime}
+												value={this.state.expectedStartTime || data.visitor.expectedStartTime}
 												iconPosition="left"
 												onChange={this.handleChangeDt}
 											/>
@@ -137,7 +188,7 @@ class UpdateVisit extends Component {
 												name="expectedEndTime"
 												placeholder="Hora final de visita"
 												required
-												value={data.visitor.expectedEndTime}
+												value={this.state.expectedEndTime || data.visitor.expectedEndTime}
 												iconPosition="left"
 												onChange={this.handleChangeDt}
 											/>
@@ -156,7 +207,7 @@ class UpdateVisit extends Component {
 											/>
 										</label>
 										<button className="ui positive button" type="submit">
-											Sav{loading ? 'ing' : 'e'} Changes
+											Guarda{loading ? 'ndo' : 'r'} Cambios
 										</button>
 									</fieldset>
 								</Form>
