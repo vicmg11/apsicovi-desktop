@@ -27,9 +27,12 @@ type Mutation {
 		expectedEndTime: String
 		expectedStartDate: String
 	): Visitor!
+	signup(email: String!, password: String!, name: String!) : User!
+	signin(email: String!, password: String!) : User!
 }
 
 type Query {
 	visitors(where: VisitorWhereInput, orderBy: VisitorOrderByInput, skip: Int, first: Int): [Visitor]!
 	visitor(where: VisitorWhereUniqueInput!): Visitor
+  me: User
 }

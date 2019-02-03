@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Jan 16 2019 19:41:41 GMT-0800 (PST)
+# timestamp: Sat Feb 02 2019 17:10:26 GMT-0800 (PST)
 
 type AggregateUser {
   count: Int!
@@ -68,6 +68,7 @@ enum Permission {
   ADMIN
   MAINUSER
   USER
+  PERMISSIONUPDATE
 }
 
 type Query {
@@ -85,6 +86,11 @@ type Query {
   ): Node
 }
 
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   visitor(where: VisitorSubscriptionWhereInput): VisitorSubscriptionPayload
@@ -92,14 +98,14 @@ type Subscription {
 
 type User implements Node {
   id: ID!
-  streetId: Int!
+  streetId: Int
   name: String!
   email: String!
-  price: Int!
-  host: String!
+  price: Int
+  host: String
   expirationDate: DateTime
-  database: String!
-  status: String!
+  database: String
+  status: [Status!]
   password: String!
   resetToken: String
   resetTokenExpiry: String
@@ -117,22 +123,26 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  streetId: Int!
+  streetId: Int
   name: String!
   email: String!
-  price: Int!
-  host: String!
+  price: Int
+  host: String
   expirationDate: DateTime
-  database: String!
-  status: String!
+  database: String
   password: String!
   resetToken: String
   resetTokenExpiry: String
+  status: UserCreatestatusInput
   permissions: UserCreatepermissionsInput
 }
 
 input UserCreatepermissionsInput {
   set: [Permission!]
+}
+
+input UserCreatestatusInput {
+  set: [Status!]
 }
 
 """An edge in a connection."""
@@ -161,8 +171,6 @@ enum UserOrderByInput {
   expirationDate_DESC
   database_ASC
   database_DESC
-  status_ASC
-  status_DESC
   password_ASC
   password_DESC
   resetToken_ASC
@@ -177,14 +185,14 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
-  streetId: Int!
+  streetId: Int
   name: String!
   email: String!
-  price: Int!
-  host: String!
+  price: Int
+  host: String
   expirationDate: DateTime
-  database: String!
-  status: String!
+  database: String
+  status: [Status!]
   password: String!
   resetToken: String
   resetTokenExpiry: String
@@ -238,15 +246,19 @@ input UserUpdateInput {
   host: String
   expirationDate: DateTime
   database: String
-  status: String
   password: String
   resetToken: String
   resetTokenExpiry: String
+  status: UserUpdatestatusInput
   permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdatepermissionsInput {
   set: [Permission!]
+}
+
+input UserUpdatestatusInput {
+  set: [Status!]
 }
 
 input UserWhereInput {
@@ -524,46 +536,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   database_not_ends_with: String
-  status: String
-
-  """All values that are not equal to given value."""
-  status_not: String
-
-  """All values that are contained in given list."""
-  status_in: [String!]
-
-  """All values that are not contained in given list."""
-  status_not_in: [String!]
-
-  """All values less than the given value."""
-  status_lt: String
-
-  """All values less than or equal the given value."""
-  status_lte: String
-
-  """All values greater than the given value."""
-  status_gt: String
-
-  """All values greater than or equal the given value."""
-  status_gte: String
-
-  """All values containing the given string."""
-  status_contains: String
-
-  """All values not containing the given string."""
-  status_not_contains: String
-
-  """All values starting with the given string."""
-  status_starts_with: String
-
-  """All values not starting with the given string."""
-  status_not_starts_with: String
-
-  """All values ending with the given string."""
-  status_ends_with: String
-
-  """All values not ending with the given string."""
-  status_not_ends_with: String
   password: String
 
   """All values that are not equal to given value."""
@@ -688,6 +660,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }
 
 type Visitor implements Node {
