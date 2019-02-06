@@ -3,47 +3,42 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import { CURRENT_USER_QUERY } from './User';
 
-const SIGNIN_MUTATION = gql`
-	mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-		signin(email: $email, password: $password) {
-			id
-			email
-			name
+const REQUEST_RESET_MUTATION = gql`
+	mutation REQUEST_RESET_MUTATION($email: String!) {
+		requestReset(email: $email) {
+			message
 		}
 	}
 `;
 
-class Login extends Component {
+class RequestReset extends Component {
 	state = {
-		email: '',
-		password: ''
+		email: ''
 	};
 	saveToState = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 	render() {
 		return (
-			<Mutation
-				mutation={SIGNIN_MUTATION}
-				variables={this.state}
-				refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
-			>
-				{(signin, { error, loading }) => {
+			<Mutation mutation={REQUEST_RESET_MUTATION} variables={this.state}>
+				{(reset, { error, loading, called }) => {
 					return (
 						<Form
 							method="post"
 							className="ui form"
 							onSubmit={async (e) => {
 								e.preventDefault();
-								await signin();
-								this.setState({ email: '', password: '' });
+								await reset();
+								this.setState({ email: '' });
 							}}
 						>
 							<fieldset disabled={loading} aria-busy={loading}>
-								<h2>Acceso a Cuenta</h2>
+								<h2>Cambio de Contraseña</h2>
 								<Error error={error} />
+								{!error &&
+								!loading &&
+								called && <p>Checa tu e-mail para la liga de cambio de contraseña</p>}
 								<label htmlFor="email">
 									Email
 									<input
@@ -55,18 +50,8 @@ class Login extends Component {
 									/>
 								</label>
 
-								<label htmlFor="password">
-									Password
-									<input
-										type="password"
-										name="password"
-										placeholder="Password"
-										value={this.state.password}
-										onChange={this.saveToState}
-									/>
-								</label>
 								<button className="ui positive button" type="submit">
-									Ingresar
+									Cambio de Contraseña
 								</button>
 							</fieldset>
 						</Form>
@@ -77,4 +62,4 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+export default RequestReset;

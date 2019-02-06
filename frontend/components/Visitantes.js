@@ -39,12 +39,16 @@ const Center = styled.div`
 		font-size: 2rem;
 		position: fixed;
 		top: 10px;
-		z-index: 4;
+		z-index: 3;
 		width: 28px;
-		height: 24px;
+		height: 30px;
 		right: 28px;
 		color: #22568d !important;
 		background: #f4f4f4;
+		cursor: pointer;
+		i {
+			height: 0px;
+		}
 	}
 `;
 

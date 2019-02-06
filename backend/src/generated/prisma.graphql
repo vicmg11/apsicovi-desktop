@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Feb 02 2019 17:10:26 GMT-0800 (PST)
+# timestamp: Tue Feb 05 2019 22:38:24 GMT-0800 (PST)
 
 type AggregateUser {
   count: Int!
@@ -137,6 +137,11 @@ input UserCreateInput {
   permissions: UserCreatepermissionsInput
 }
 
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreatepermissionsInput {
   set: [Permission!]
 }
@@ -238,6 +243,21 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  streetId: Int
+  name: String
+  email: String
+  price: Int
+  host: String
+  expirationDate: DateTime
+  database: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  status: UserUpdatestatusInput
+  permissions: UserUpdatepermissionsInput
+}
+
 input UserUpdateInput {
   streetId: Int
   name: String
@@ -253,12 +273,25 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
 }
 
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
 input UserUpdatestatusInput {
   set: [Status!]
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -674,6 +707,7 @@ type Visitor implements Node {
   expectedStartTime: String
   expectedEndTime: String
   expectedStartDate: String
+  user(where: UserWhereInput): User!
 }
 
 """A connection to a list of items."""
@@ -696,6 +730,7 @@ input VisitorCreateInput {
   expectedStartTime: String
   expectedEndTime: String
   expectedStartDate: String
+  user: UserCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -796,6 +831,7 @@ input VisitorUpdateInput {
   expectedStartTime: String
   expectedEndTime: String
   expectedStartDate: String
+  user: UserUpdateOneInput
 }
 
 input VisitorWhereInput {
@@ -1207,6 +1243,7 @@ input VisitorWhereInput {
 
   """All values not ending with the given string."""
   expectedStartDate_not_ends_with: String
+  user: UserWhereInput
 }
 
 input VisitorWhereUniqueInput {

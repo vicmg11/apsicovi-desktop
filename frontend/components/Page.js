@@ -42,7 +42,7 @@ injectGlobal`
     font-weight: normal;
     font-style: normal;
   } */
-  html{
+  html {
     box-sizing: border-box;
     font-size: 10px
   }

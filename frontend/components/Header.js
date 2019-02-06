@@ -33,13 +33,6 @@ const Logo = styled.h1`
 	}
 `;
 
-const Logout = styled.h1`
-  a {
-    color: ${(props) => props.theme.buttonBlue};
-    text-decoration: none;
-  }
-`;
-
 const StyledHeader = styled.header`
 	position: fixed;
 	top: 0px;
@@ -72,13 +65,6 @@ const Header = () => (
 					</a>
 				</Link>
 			</Logo>
-			<Logout>
-				<Link href="/signout">
-					<a title="Logout">
-						<Icon name="sign out alternate" />
-					</a>
-				</Link>
-			</Logout>
 		</div>
 	</StyledHeader>
 );

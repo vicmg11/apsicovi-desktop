@@ -45,7 +45,6 @@ export default class Visitante extends Component {
 
 	render() {
 		const { visitor } = this.props;
-		console.log(visitor);
 		const itemStyle = visitor.status == 'INACTIVO' ? disabledClass : enableClass;
 		return (
 			<div className="item" style={itemStyle}>

@@ -44,5 +44,5 @@ type Visitor {
   expectedStartTime: String
   expectedEndTime: String
   expectedStartDate: String
-  #user: User!
+  user: User!
 }
