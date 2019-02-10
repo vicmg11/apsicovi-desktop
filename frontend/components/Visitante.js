@@ -2,17 +2,26 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
+import gql from 'graphql-tag';
 import 'semantic-ui-css/semantic.min.css';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Button, Card, Image } from 'semantic-ui-react';
 import { UPDATE_VISITOR_MUTATION } from './UpdateVisitor';
+import styled from 'styled-components';
 
-const disabledClass = {
-	opacity: 0.45
-};
+const Disable = styled.span`
+	font-size: 12px;
+	color: #cccccc;
+	padding-left: 5px;
+`;
 
-const enableClass = {
-	opacity: 1
-};
+const UPDATE_STATUS_MUTATION = gql`
+	mutation updateVisitorMutation($status: [Status], $id: ID!) {
+		updateVisitorStatus(status: $status, id: $id) {
+			id
+			status
+		}
+	}
+`;
 
 export default class Visitante extends Component {
 	static propTypes = {
@@ -23,69 +32,57 @@ export default class Visitante extends Component {
 		const { id } = this.props.visitor;
 		Router.push({
 			pathname: '/update',
-			query: { id: id }
-		});
-	};
-
-	updateStatus = async (e, updateVisitorMutation) => {
-		e.preventDefault();
-		console.log('Updating Visitor!!');
-		const { visitor } = this.props;
-		visitor.status = 'INACTIVO';
-		const res = await updateVisitorMutation({
-			variables: {
-				id: visitor.id,
-				status: visitor.status
+			query: { 
+				id: id,
 			}
-		});
-		Router.push({
-			pathname: '/lista'
 		});
 	};
 
 	render() {
 		const { visitor } = this.props;
-		const itemStyle = visitor.status == 'INACTIVO' ? disabledClass : enableClass;
 		return (
-			<div className="item" style={itemStyle}>
-				<div className="fix-image">
-					<img
-						className="ui circular bordered image"
-						width="90"
-						height="90"
-						src={visitor.image || '../static/user_gray.png'}
-					/>
-				</div>
-				<div className="content">
-					<h2>{visitor.status == 'INACTIVO' && <Icon name="ban" />} {visitor.name}</h2>
-					<div className="description">
-						<b>Visita esperada:</b> {visitor.expectedStartDate}
-						<br />
-						<b>Hora esperada:</b> Entre {visitor.expectedStartTime} y {visitor.expectedEndTime}
-					</div>
-					<div>
-						<b>Motivio de la Visita:</b> {visitor.description}
-					</div>
-					{visitor.status == 'ACTIVO' && (
-						<div className="ui two buttons">
-							<div className="ui basic green button" onClick={this.updateVisit}>
-								<Icon name="pencil alternate" /> Editar
+			<Card.Group>
+				<Card style={{ width: '98%', margin: '2px auto' }}>
+					<Card.Content style={{ paddingBottom: '0.1em' }}>
+						<Image floated="right" size="mini" src={visitor.image || '../static/user_gray.png'} />
+						<Card.Header>
+							{visitor.name}
+							<Disable>{visitor.status != 'ACTIVE' && '(Deshabilitado)'}</Disable>
+						</Card.Header>
+						<Card.Meta>{visitor.description}</Card.Meta>
+						<Card.Description>
+							<div>
+								<b>Fecha visita:</b> {visitor.expectedStartDate}
 							</div>
-							<Mutation mutation={UPDATE_VISITOR_MUTATION}>
-								{(updateVisitor) => (
-									<div
-										className="ui basic red button"
-										onClick={(e) => this.updateStatus(e, updateVisitor)}
-									>
-										<Icon name="close" /> Deshabilitar
-									</div>
-								)}
-							</Mutation>
-						</div>
+							<div>
+								<b>Hora visita:</b> Entre {visitor.expectedStartTime} y {visitor.expectedEndTime} hrs.
+							</div>
+						</Card.Description>
+					</Card.Content>
+					{visitor.status == 'ACTIVE' && (
+						<Card.Content extra style={{ padding: '.1em 1em' }}>
+							<div className="ui two buttons">
+								<Button basic color="green" onClick={this.updateVisit}>
+									Actualizar
+								</Button>
+								<Mutation
+									mutation={UPDATE_STATUS_MUTATION}
+									variables={{
+										id: visitor.id,
+										status: 'INACTIVE'
+									}}
+								>
+									{(update, { loading, error }) => (
+										<Button basic color="red" disabled={loading} onClick={update}>
+											Deshabilitar
+										</Button>
+									)}
+								</Mutation>
+							</div>
+						</Card.Content>
 					)}
-
-				</div>
-			</div>
+				</Card>
+			</Card.Group>
 		);
 	}
 }

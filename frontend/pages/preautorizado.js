@@ -4,7 +4,7 @@ import PleaseSignIn from '../components/PleaseSigning';
 const Autorizado = (props) => (
 	<div>
 		<PleaseSignIn>
-			<CrearVisitante visitorType="frecuente"/>
+			<CrearVisitante visitorType="preautorizado"/>
 		</PleaseSignIn>
 	</div>
 );

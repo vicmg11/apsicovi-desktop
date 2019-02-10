@@ -22,7 +22,7 @@ const SINGLE_VISITOR_QUERY = gql`
 		visitor(where: { id: $id }) {
 			id
 			name
-			userType
+			visitorType
 			status
 			image
 			largeImage
@@ -45,7 +45,6 @@ class SingleVisitor extends Component {
 				{({ error, loading, data }) => {
 					if (error) return <Error error={error} />;
 					if (loading) return <p>Loading...</p>;
-					console.log(data);
 					if (!data.visitor) return <p>No se encontro el visitante...</p>;
 					const visitor = data.visitor;
 					return (

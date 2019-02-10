@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import styled from 'styled-components';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 
@@ -34,11 +35,11 @@ class RequestReset extends Component {
 							}}
 						>
 							<fieldset disabled={loading} aria-busy={loading}>
-								<h2>Cambio de Contraseña</h2>
+								<div className="title">Cambio de Contraseña</div>
 								<Error error={error} />
 								{!error &&
 								!loading &&
-								called && <p>Checa tu e-mail para la liga de cambio de contraseña</p>}
+								called && <p className="alert">Revisa tu e-mail para el cambio de contraseña</p>}
 								<label htmlFor="email">
 									Email
 									<input
@@ -50,8 +51,8 @@ class RequestReset extends Component {
 									/>
 								</label>
 
-								<button className="ui positive button" type="submit">
-									Cambio de Contraseña
+								<button className="ui blue button" type="submit">
+									Cambia Contraseña
 								</button>
 							</fieldset>
 						</Form>

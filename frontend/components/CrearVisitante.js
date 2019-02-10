@@ -9,10 +9,10 @@ import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
 import FotoVisitor from './styles/FotoVisitor';
 
-const CREATE_VISIT_AUTH_MUTATION = gql`
+const CREATE_VISIT_MUTATION = gql`
 	mutation CREATE_VISIT_AUTH_MUTATION(
 		$name: String!
-		$userType: String
+		$visitorType: String
 		$status: String
 		$image: String
 		$largeImage: String
@@ -23,7 +23,7 @@ const CREATE_VISIT_AUTH_MUTATION = gql`
 	) {
 		createVisitor(
 			name: $name
-			userType: $userType
+			visitorType: $visitorType
 			status: $status
 			image: $image
 			largeImage: $largeImage
@@ -37,11 +37,10 @@ const CREATE_VISIT_AUTH_MUTATION = gql`
 	}
 `;
 
-class VisitaAutorizada extends Component {
+class CrearVisitante extends Component {
 	state = {
 		name: '',
-		userType: 'PREAUTORIZADO',
-		status: 'ACTIVO',
+		visitorType: this.props.visitorType,
 		image: '',
 		largeImage: '',
 		description: '',
@@ -80,8 +79,9 @@ class VisitaAutorizada extends Component {
 	};
 
 	render() {
+		const { visitorType } = this.props;
 		return (
-			<Mutation mutation={CREATE_VISIT_AUTH_MUTATION} variables={this.state}>
+			<Mutation mutation={CREATE_VISIT_MUTATION} variables={this.state}>
 				{(createVisitor, { loading, error }) => (
 					<Form
 						className="ui form"
@@ -97,12 +97,12 @@ class VisitaAutorizada extends Component {
 							// });
 							// Display list of visitors
 							Router.push({
-								pathname: '/lista'
+								pathname: '/' + visitorType + 's'
 							});
 						}}
 					>
 						<Error error={error} />
-						<h2>Visitantes Preautorizados</h2>
+						<div className="title">Visitantes {visitorType}s</div>
 						<fieldset className="fields" disabled={loading} aria-busy={loading}>
 							<label htmlFor="file">
 								Foto
@@ -196,5 +196,5 @@ class VisitaAutorizada extends Component {
 	}
 }
 
-export default VisitaAutorizada;
-export { CREATE_VISIT_AUTH_MUTATION };
+export default CrearVisitante;
+export { CREATE_VISIT_MUTATION };

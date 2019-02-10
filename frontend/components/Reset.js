@@ -54,10 +54,10 @@ class Reset extends Component {
 							}}
 						>
 							<fieldset disabled={loading} aria-busy={loading}>
-								<h2>Cambia de Contraseña</h2>
+								<div className="title">Cambio de Contraseña</div>
 								<Error error={error} />
 								<label htmlFor="password">
-									Contranseña
+									Nueva Contranseña
 									<input
 										type="password"
 										name="password"
@@ -78,7 +78,7 @@ class Reset extends Component {
 									/>
 								</label>
 
-								<button className="ui positive button" type="submit">
+								<button className="ui blue button" type="submit">
 									Proceder
 								</button>
 							</fieldset>

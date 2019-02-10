@@ -9,11 +9,11 @@ import Visitante from './Visitante';
 import { perPage } from '../config';
 
 const ALL_VISITORS_QUERY = gql`
-  query ALL_VISITORS_QUERY($skip: Int = 0, $first: Int = ${perPage}) {
-    visitors(first: $first, skip: $skip, orderBy: createdAt_DESC) {
-      id
+	query ALL_VISITORS_QUERY($visitorType: String) {
+		visitors(where: {visitorType : $visitorType} orderBy: createdAt_DESC) {
+			id
 			name
-			userType
+			visitorType
 			status
 			image
 			largeImage
@@ -21,8 +21,8 @@ const ALL_VISITORS_QUERY = gql`
 			expectedStartDate
 			expectedStartTime
 			expectedEndTime
-    }
-  }
+		}
+	}
 `;
 
 const Center = styled.div`
@@ -56,7 +56,8 @@ const VisitorsList = styled.div`
 	.content {
 		padding-left: 1rem !important;
 	}
-	.fix-image, img {
+	.fix-image,
+	img {
 		width: 90px;
 	}
 	.description {
@@ -68,15 +69,23 @@ const VisitorsList = styled.div`
 	.ui.two.buttons {
 		margin-bottom: 8px;
 	}
+	.title {
+		text-align: center;
+		padding: 10px;
+		color: #22568d;
+		font-size: 2rem;
+	}
 `;
 
 class Visitantes extends Component {
 	handleVisit = (e) => {
 		Router.push({
-			pathname: '/autorizado'
+			pathname: '/' + this.props.visitorType
 		});
 	};
+
 	render() {
+		const { visitorType } = this.props;
 		const btnAlta = (
 			<div className="alta-visitas" onClick={this.handleVisit}>
 				<Icon name="user plus" />
@@ -87,7 +96,8 @@ class Visitantes extends Component {
 				{btnAlta}
 				<div className="ui huge floating message">
 					<p>
-						No existen visitantes preautorizados, registralos dando click a <Icon name="user plus" />
+						No existen visitantes {visitorType}s, registralos dando click al icono de arriba{' '}
+						<Icon name="user plus" />
 					</p>
 				</div>
 			</div>
@@ -96,10 +106,8 @@ class Visitantes extends Component {
 			<Center>
 				<Query
 					query={ALL_VISITORS_QUERY}
+					variables={{ visitorType: this.props.visitorType }}
 					fetchPolicy="network-only"
-					variables={{
-						skip: this.props.page * perPage - perPage
-					}}
 				>
 					{({ data, error, loading }) => {
 						if (loading) return <p>Loading...</p>;
@@ -108,7 +116,7 @@ class Visitantes extends Component {
 						return (
 							<VisitorsList>
 								{btnAlta}
-								<h1>Visitantes Preautorizados</h1>
+								<div className="title">Visitantes {visitorType}s</div>
 								<div className="ui unstackable items">
 									{data.visitors.map((visitante) => (
 										<Visitante visitor={visitante} key={visitante.id} />

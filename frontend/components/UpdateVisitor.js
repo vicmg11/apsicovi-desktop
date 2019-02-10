@@ -16,6 +16,7 @@ const SINGLE_VISITOR_QUERY = gql`
 			name
 			image
 			largeImage
+			visitorType
 			description
 			expectedStartDate
 			expectedStartTime
@@ -27,7 +28,6 @@ const UPDATE_VISITOR_MUTATION = gql`
 	mutation UPDATE_VISITOR_MUTATION(
 		$id: ID!
 		$name: String
-		$status: String
 		$image: String
 		$largeImage: String
 		$description: String
@@ -38,7 +38,6 @@ const UPDATE_VISITOR_MUTATION = gql`
 		updateVisitor(
 			id: $id
 			name: $name
-			status: $status
 			image: $image
 			largeImage: $largeImage
 			description: $description
@@ -48,7 +47,6 @@ const UPDATE_VISITOR_MUTATION = gql`
 		) {
 			id
 			name
-			status
 			image
 			largeImage
 			description
@@ -59,7 +57,7 @@ const UPDATE_VISITOR_MUTATION = gql`
 	}
 `;
 
-class UpdateVisit extends Component {
+class UpdateVisitor extends Component {
 	state = {};
 	handleChange = (e) => {
 		const { name, type, value } = e.target;
@@ -67,7 +65,7 @@ class UpdateVisit extends Component {
 		this.setState({ [name]: val });
 	};
 
-	handleChangeDt = (event, {name, value }) => {
+	handleChangeDt = (event, { name, value }) => {
 		this.setState({ [name]: value });
 	};
 
@@ -81,17 +79,14 @@ class UpdateVisit extends Component {
 			body: data
 		});
 		const file = await res.json();
-		console.log(file);
 		this.setState({
 			image: file.secure_url,
 			largeImage: file.eager[0].secure_url
 		});
 	};
 
-	updateVisitor = async (e, updateVisitorMutation) => {
+	updateVisitor = async (e, updateVisitorMutation, visitorType) => {
 		e.preventDefault();
-		console.log('Updating Visitor!!');
-		console.log(this.state);
 		const res = await updateVisitorMutation({
 			variables: {
 				id: this.props.id,
@@ -99,7 +94,7 @@ class UpdateVisit extends Component {
 			}
 		});
 		Router.push({
-			pathname: '/lista'
+			pathname: '/' + visitorType + 's'
 		});
 	};
 
@@ -114,12 +109,16 @@ class UpdateVisit extends Component {
 				{({ data, loading }) => {
 					if (loading) return <p>Loading...</p>;
 					if (!data.visitor) return <p>No Visitor Found for ID... {this.props.id}</p>;
+					const visitorType = data.visitor.visitorType;
 					return (
 						<Mutation mutation={UPDATE_VISITOR_MUTATION} variables={this.state}>
 							{(updateVisitor, { loading, error }) => (
-								<Form className="ui form" onSubmit={(e) => this.updateVisitor(e, updateVisitor)}>
+								<Form
+									className="ui form"
+									onSubmit={(e) => this.updateVisitor(e, updateVisitor, visitorType)}
+								>
 									<Error error={error} />
-									<h2>Actualiza Visitante Preautorizado</h2>
+									<div className="title">Actualiza Visitante {visitorType}</div>
 									<fieldset className="fields" disabled={loading} aria-busy={loading}>
 										<label htmlFor="file">
 											Foto
@@ -135,9 +134,7 @@ class UpdateVisit extends Component {
 												width="100"
 												height="100"
 												src={
-													this.state.image ||
-													data.visitor.image ||
-													'../static/user_gray.png'
+													this.state.image || data.visitor.image || '../static/user_gray.png'
 												}
 												alt="Agrega una foto"
 											/>
@@ -220,5 +217,5 @@ class UpdateVisit extends Component {
 	}
 }
 
-export default UpdateVisit;
+export default UpdateVisitor;
 export { UPDATE_VISITOR_MUTATION };

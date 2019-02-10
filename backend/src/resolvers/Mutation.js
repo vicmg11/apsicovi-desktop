@@ -19,6 +19,8 @@ const mutations = {
 						}
 					},
 					...args,
+					//visitorType: { set: [ args.visitorType.toUpperCase() ] },
+					status: { set: [ 'ACTIVE' ] }
 				}
 			},
 			info
@@ -43,6 +45,22 @@ const mutations = {
 			info
 		);
 	},
+
+	async updateVisitorStatus(parent, args, ctx, info) {
+    return ctx.db.mutation.updateVisitor(
+      {
+        data: {
+          status: {
+            set: args.status,
+          },
+        },
+        where: {
+          id: args.id,
+        },
+      },
+      info
+    );
+  },
 
 	async signup(parent, args, ctx, info) {
 		args.email = args.email.toLowerCase();
@@ -116,8 +134,7 @@ const mutations = {
 			from: 'victor@marmolejo.com',
 			to: user.email,
 			subject: 'Cambio de  Contraseña (APSICOVI)',
-			html: makeAnEmail(`Para cambiar la contraseña dale click en el button de abajo
-			
+			html: makeAnEmail(`Para cambiar la contraseña dale click en el boton de abajo
 			<a style="
 			font-size: 20px;
 			border-radius: 6px;

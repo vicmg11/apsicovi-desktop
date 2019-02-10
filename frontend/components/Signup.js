@@ -66,11 +66,11 @@ class Signup extends Component {
 									/>
 								</label>
 								<label htmlFor="password">
-									Password
+									Contraseña
 									<input
 										type="password"
 										name="password"
-										placeholder="Password"
+										placeholder="Contraseña"
 										value={this.state.password}
 										onChange={this.saveToState}
 									/>

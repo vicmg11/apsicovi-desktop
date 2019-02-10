@@ -1,9 +1,12 @@
-import UpdateVisit from '../components/UpdateVisitor';
+import UpdateVisitor from '../components/UpdateVisitor';
+import PleaseSignIn from '../components/PleaseSigning';
 
 const Update = ({ query }) => (
-  <div>
-    <UpdateVisit id={query.id} />
-  </div>
+	<div>
+		<PleaseSignIn>
+			<UpdateVisitor id={query.id} />
+		</PleaseSignIn>
+	</div>
 );
 
 export default Update;

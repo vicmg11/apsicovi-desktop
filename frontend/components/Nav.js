@@ -13,14 +13,14 @@ const Nav = () => (
 				{me && (
 					<>
 					  <div className="main-links">
-							<Link href="/lista">
+							<Link href="/preautorizados">
 								<a className="a">
 									<div>
 										<Icon name="id card outline" /> Visitantes Preautorizados
 									</div>
 								</a>
 							</Link>
-							<Link href="/frecuente">
+							<Link href="/frecuentes">
 								<a className="b">
 									<div>
 										<Icon name="users" /> Visitantes Frecuentes

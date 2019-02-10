@@ -7,7 +7,7 @@ type SuccessMessage {
 type Mutation {
 	createVisitor(
 		name: String
-		userType: String
+		visitorType: String
 		image: String
 		largeImage: String
 		description: String
@@ -32,6 +32,7 @@ type Mutation {
 	signout: SuccessMessage
 	requestReset(email: String!): SuccessMessage
 	resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+	updateVisitorStatus(status: [Status], id: ID!): Visitor
 }
 
 type Query {

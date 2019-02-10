@@ -11,11 +11,13 @@ const transporter = nodemailer.createTransport({
 
 const makeAnEmail = (text) => `
   <div className="email" style="
-    border: 1px solid black;
+    background-color: #cccccc40;
     padding: 60px;
     font-family: sans-serif;
     line-height: 2;
     font-size: 20px;
+    max-width: 499px;
+    margin: auto;
   ">
     <div style="font-size: 1rem; padding: 10px; color: white; background-color: #22568D; height: 30px;">
     Recibimos una peticion para cambio de contraseña. 

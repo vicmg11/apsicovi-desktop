@@ -1,9 +1,13 @@
 import Signup from '../components/Signup';
+import PleaseSignIn from '../components/PleaseSigning';
 
-const SignupPage = props => (
-  <div>
-    <Signup />
-  </div>
-)
+//Todo Solo admin podra accesar este metodo
+const SignupPage = (props) => (
+	<div>
+		<PleaseSignIn>
+			<Signup />
+		</PleaseSignIn>
+	</div>
+);
 
 export default SignupPage;

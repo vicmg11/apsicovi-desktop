@@ -36,11 +36,11 @@ type User {
 type Visitor {
   id: ID! @unique
   name: String!
-  userType: String! 
+  visitorType: String!
   image: String
   largeImage: String
   description: String
-  status: String! 
+  status: [Status]! 
   expectedStartTime: String
   expectedEndTime: String
   expectedStartDate: String
