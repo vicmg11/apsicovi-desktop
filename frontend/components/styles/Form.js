@@ -25,7 +25,7 @@ const Form = styled.form`
 		display: block;
 		margin-bottom: 1rem;
 	}
-	label:first-child {
+	label.photo {
 		padding-top: 15px;
 		height: 135px;
 	}

@@ -32,8 +32,8 @@ export default class Visitante extends Component {
 		const { id } = this.props.visitor;
 		Router.push({
 			pathname: '/update',
-			query: { 
-				id: id,
+			query: {
+				id: id
 			}
 		});
 	};
@@ -44,20 +44,25 @@ export default class Visitante extends Component {
 			<Card.Group>
 				<Card style={{ width: '98%', margin: '2px auto' }}>
 					<Card.Content style={{ paddingBottom: '0.1em' }}>
-						<Image floated="right" size="mini" src={visitor.image || '../static/user_gray.png'} />
+						{visitor.visitorType !== 'servicio' && (
+							<Image floated="right" size="mini" src={visitor.image || '../static/user_gray.png'} />
+						)}
 						<Card.Header>
 							{visitor.name}
 							<Disable>{visitor.status != 'ACTIVE' && '(Deshabilitado)'}</Disable>
 						</Card.Header>
-						<Card.Meta>{visitor.description}</Card.Meta>
-						<Card.Description>
-							<div>
-								<b>Fecha visita:</b> {visitor.expectedStartDate}
-							</div>
-							<div>
-								<b>Hora visita:</b> Entre {visitor.expectedStartTime} y {visitor.expectedEndTime} hrs.
-							</div>
-						</Card.Description>
+						<Card.Meta>{visitor.visitorType !== 'frecuente' && visitor.description}</Card.Meta>
+						{visitor.visitorType !== 'frecuente' && (
+							<Card.Description>
+								<div>
+									<b>Fecha visita:</b> {visitor.expectedStartDate}
+								</div>
+								<div>
+									<b>Hora visita:</b> Entre {visitor.expectedStartTime} y {visitor.expectedEndTime}{' '}
+									hrs.
+								</div>
+							</Card.Description>
+						)}
 					</Card.Content>
 					{visitor.status == 'ACTIVE' && (
 						<Card.Content extra style={{ padding: '.1em 1em' }}>

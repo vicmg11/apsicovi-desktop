@@ -1,7 +1,7 @@
 import Visitantes from '../components/Visitantes';
 import PleaseSignIn from '../components/PleaseSigning';
 
-const Preautorizado = (props) => (
+const Preautorizados = (props) => (
 	<div>
 		<PleaseSignIn>
 			<Visitantes visitorType="preautorizado" />
@@ -9,4 +9,4 @@ const Preautorizado = (props) => (
 	</div>
 );
 
-export default Preautorizado;
+export default Preautorizados;

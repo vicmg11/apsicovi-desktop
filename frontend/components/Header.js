@@ -42,16 +42,17 @@ const StyledHeader = styled.header`
 	background-color: #f4f4f4;
 	.bar {
     padding: 0 25px;
-    margin: 0 1rem;
+    margin: 0;
 		display: grid;
+		text-align: center;
 		grid-template-columns: 1fr 20px;
 		justify-content: space-between;
 		align-items: stretch;
     margin-bottom: 10px;
     border-bottom: 1px solid #8f8f8f;
-		@media (max-width: 1300px) {
+		/* @media (max-width: 1300px) {
 			justify-content: center;
-		}
+		} */
 	}
 `;
 

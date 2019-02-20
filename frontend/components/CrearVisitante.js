@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
-import Form from './styles/Form';
-import Error from './ErrorMessage';
 import { DateInput, TimeInput, DateTimeInput, DatesRangeInput } from 'semantic-ui-calendar-react';
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
+import Error from './ErrorMessage';
+import Form from './styles/Form';
 import FotoVisitor from './styles/FotoVisitor';
 
 const CREATE_VISIT_MUTATION = gql`
@@ -46,7 +46,7 @@ class CrearVisitante extends Component {
 		description: '',
 		expectedStartDate: '',
 		expectedStartTime: '',
-		expectedEndTime: ''
+		expectedEndTime: '',
 	};
 
 	handleChange = (e) => {
@@ -62,21 +62,24 @@ class CrearVisitante extends Component {
 	};
 
 	uploadFile = async (e) => {
+		console.log('uploadFile')
 		const files = e.target.files;
 		const data = new FormData();
 		data.append('file', files[0]);
+		console.log(files[0])
 		data.append('upload_preset', 'sicovi');
-
-		const res = await fetch('https://api.cloudinary.com/v1_1/ddltr8h2k/image/upload', {
-			method: 'POST',
-			body: data
-		});
-		const file = await res.json();
+		console.log(data)
+		// const res = await fetch('https://api.cloudinary.com/v1_1/ddltr8h2k/image/upload', {
+		// 	method: 'POST',
+		// 	body: data
+		// });
+		//const file = await res.json();
 		this.setState({
 			image: file.secure_url,
-			largeImage: file.eager[0].secure_url
+		  //largeImage: file.eager[0].secure_url
 		});
 	};
+ 
 
 	render() {
 		const { visitorType } = this.props;
@@ -90,12 +93,6 @@ class CrearVisitante extends Component {
 							e.preventDefault();
 							// call the mutation
 							const res = await createVisitor();
-							// Change them to the single visitor page
-							// Router.push({
-							// 	pathname: '/visita',
-							// 	query: { id: res.data.createVisitor.id }
-							// });
-							// Display list of visitors
 							Router.push({
 								pathname: '/' + visitorType + 's'
 							});
@@ -104,28 +101,31 @@ class CrearVisitante extends Component {
 						<Error error={error} />
 						<div className="title">Visitantes {visitorType}s</div>
 						<fieldset className="fields" disabled={loading} aria-busy={loading}>
-							<label htmlFor="file">
-								Foto
-								<input
-									type="file"
-									id="file"
-									name="file"
-									placeholder="Foto del Visitante"
-									onChange={this.uploadFile}
-								/>
-								<img
-									className="ui circular bordered image"
-									width="100"
-									height="100"
-									src={this.state.image || '../static/user_gray.png'}
-									alt="Agrega una foto"
-								/>
-								<FotoVisitor>
-									<Icon name="camera" />
-								</FotoVisitor>
-							</label>
+							{visitorType !== 'servicio' && (
+								<label className="photo" htmlFor="file">
+									Foto
+									<input
+										type="file"
+										id="file"
+										name="file"
+										placeholder="Foto del Visitante"
+										onChange={this.uploadFile}
+									/>
+						   
+									<img
+										className="ui circular bordered image"
+										width="100"
+										height="100"
+										src={this.state.image || '../static/user_gray.png'}
+										alt="Agrega una foto"
+									/>
+									<FotoVisitor>
+										<Icon name="camera" />
+									</FotoVisitor>
+								</label>
+							)}
 							<label htmlFor="name">
-								Nombre
+								Nombre {visitorType === 'servicio' && 'de la Empresa'}
 								<input
 									type="text"
 									id="name"
@@ -137,54 +137,58 @@ class CrearVisitante extends Component {
 								/>
 							</label>
 
-							<label htmlFor="expectedStartDate">
-								Fecha de Visita
-								<DateInput
-									name="expectedStartDate"
-									placeholder="Fecha de Visita"
-									required
-									value={this.state.expectedStartDate}
-									iconPosition="left"
-									onChange={this.handleChangeDt}
-								/>
-							</label>
+							{visitorType !== 'frecuente' && (
+								<>
+									<label htmlFor="expectedStartDate">
+										Fecha de Visita
+										<DateInput
+											name="expectedStartDate"
+											placeholder="Fecha de Visita"
+											required
+											value={this.state.expectedStartDate}
+											iconPosition="left"
+											onChange={this.handleChangeDt}
+										/>
+									</label>
 
-							<label htmlFor="expectedStartTime">
-								Hora Inicial de Visita
-								<TimeInput
-									name="expectedStartTime"
-									placeholder="Hora Inicial de Visita"
-									required
-									value={this.state.expectedStartTime}
-									iconPosition="left"
-									onChange={this.handleChangeDt}
-								/>
-							</label>
+									<label htmlFor="expectedStartTime">
+										Hora Inicial de Visita
+										<TimeInput
+											name="expectedStartTime"
+											placeholder="Hora Inicial de Visita"
+											required
+											value={this.state.expectedStartTime}
+											iconPosition="left"
+											onChange={this.handleChangeDt}
+										/>
+									</label>
 
-							<label htmlFor="expectedEndTime">
-								Hora Final de Visita
-								<TimeInput
-									name="expectedEndTime"
-									placeholder="Hora final de visita"
-									required
-									value={this.state.expectedEndTime}
-									iconPosition="left"
-									onChange={this.handleChangeDt}
-								/>
-							</label>
+									<label htmlFor="expectedEndTime">
+										Hora Final de Visita
+										<TimeInput
+											name="expectedEndTime"
+											placeholder="Hora final de visita"
+											required
+											value={this.state.expectedEndTime}
+											iconPosition="left"
+											onChange={this.handleChangeDt}
+										/>
+									</label>
 
-							<label htmlFor="description">
-								Motivo de Visita
-								<textarea
-									id="description"
-									name="description"
-									rows="2"
-									placeholder="Motivo de Visita"
-									required
-									value={this.state.description}
-									onChange={this.handleChange}
-								/>
-							</label>
+									<label htmlFor="description">
+										Motivo de Visita
+										<textarea
+											id="description"
+											name="description"
+											rows="2"
+											placeholder="Motivo de Visita"
+											required
+											value={this.state.description}
+											onChange={this.handleChange}
+										/>
+									</label>
+								</>
+							)}
 							<button className="ui positive button" type="submit">
 								Guardar
 							</button>

@@ -1,12 +1,12 @@
 import Visitantes from '../components/Visitantes';
 import PleaseSignIn from '../components/PleaseSigning';
 
-const Frecuentes = (props) => (
+const Servicios = (props) => (
 	<div>
 		<PleaseSignIn>
-			<Visitantes visitorType="frecuente" />
+			<Visitantes visitorType="servicio" />
 		</PleaseSignIn>
 	</div>
 );
 
-export default Frecuentes;
+export default Servicios;

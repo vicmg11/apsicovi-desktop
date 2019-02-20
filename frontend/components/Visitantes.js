@@ -110,7 +110,7 @@ class Visitantes extends Component {
 					fetchPolicy="network-only"
 				>
 					{({ data, error, loading }) => {
-						if (loading) return <p>Loading...</p>;
+						if (loading) return <p>Leyendo datos...</p>;
 						if (error) return <p>Error: {error.message}</p>;
 						if (!data.visitors.length) return message;
 						return (

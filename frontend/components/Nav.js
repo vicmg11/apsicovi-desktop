@@ -27,14 +27,14 @@ const Nav = () => (
 									</div>
 								</a>
 							</Link>
-							<Link href="/servicio">
+							<Link href="/servicios">
 								<a className="c">
 									<div>
 										<Icon name="truck" /> Servicios
 									</div>
 								</a>
 							</Link>
-							<Link href="/domestico">
+							<Link href="/domesticos">
 								<a className="d">
 									<div>
 										<Icon name="shopping basket" />Personal Domestico

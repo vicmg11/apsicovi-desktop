@@ -120,30 +120,34 @@ class UpdateVisitor extends Component {
 									<Error error={error} />
 									<div className="title">Actualiza Visitante {visitorType}</div>
 									<fieldset className="fields" disabled={loading} aria-busy={loading}>
-										<label htmlFor="file">
-											Foto
-											<input
-												type="file"
-												id="file"
-												name="file"
-												placeholder="Foto del Visitante"
-												onChange={this.uploadFile}
-											/>
-											<img
-												className="ui circular bordered image"
-												width="100"
-												height="100"
-												src={
-													this.state.image || data.visitor.image || '../static/user_gray.png'
-												}
-												alt="Agrega una foto"
-											/>
-											<FotoVisitor>
-												<Icon name="camera" />
-											</FotoVisitor>
-										</label>
+										{visitorType !== 'servicio' && (
+											<label htmlFor="file">
+												Foto
+												<input
+													type="file"
+													id="file"
+													name="file"
+													placeholder="Foto del Visitante"
+													onChange={this.uploadFile}
+												/>
+												<img
+													className="ui circular bordered image"
+													width="100"
+													height="100"
+													src={
+														this.state.image ||
+														data.visitor.image ||
+														'../static/user_gray.png'
+													}
+													alt="Agrega una foto"
+												/>
+												<FotoVisitor>
+													<Icon name="camera" />
+												</FotoVisitor>
+											</label>
+										)}
 										<label htmlFor="name">
-											Nombre
+											Nombre {visitorType === 'servicio' && 'de la Empresa'}
 											<input
 												type="text"
 												id="name"

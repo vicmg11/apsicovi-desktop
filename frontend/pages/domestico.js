@@ -1,9 +1,10 @@
+import CrearVisitante from '../components/CrearVisitante';
 import PleaseSignIn from '../components/PleaseSigning';
 
 const Domestico = (props) => (
 	<div>
 		<PleaseSignIn>
-			<p>Domestico Page!</p>
+			<CrearVisitante visitorType="domestico"/>
 		</PleaseSignIn>
 	</div>
 );
