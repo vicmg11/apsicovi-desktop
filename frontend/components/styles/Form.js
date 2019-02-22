@@ -73,7 +73,6 @@ const Form = styled.form`
   }
 	.title {
 		text-align: center;
-		padding: 10px;
 		color: #22568d;
 		font-size: 2rem;
 	}

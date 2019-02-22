@@ -3,15 +3,13 @@ import styled from 'styled-components';
 const FotoVisitor = styled.div`
 	cursor: pointer;
 	padding-top: 6px;
-	color: #202020;
+	color: #e8e8e8;
 	text-align: center;
 	position: absolute;
+	color: #00000080;
 	top: 146px;
-	left: 82px;
-	height: 30px;
-	width: 30px;
-	background-color: #e8e8e8;
-	border-radius: 360px;
+	left: 220px;
+	z-index: -1;
 `;
 
 export default FotoVisitor;

@@ -5,9 +5,7 @@ import gql from 'graphql-tag';
 import Router from 'next/router';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
-import 'semantic-ui-css/semantic.min.css';
-import { Icon } from 'semantic-ui-react';
-import FotoVisitor from './styles/FotoVisitor';
+import PhotoCropper from './PhotoCropper';
 
 const SINGLE_VISITOR_QUERY = gql`
 	query SINGLE_VISITOR_QUERY($id: ID!) {
@@ -58,7 +56,9 @@ const UPDATE_VISITOR_MUTATION = gql`
 `;
 
 class UpdateVisitor extends Component {
-	state = {};
+	state = {
+		disabled: false
+	};
 	handleChange = (e) => {
 		const { name, type, value } = e.target;
 		const val = type === 'number' ? parseFloat(value) : value;
@@ -69,10 +69,10 @@ class UpdateVisitor extends Component {
 		this.setState({ [name]: value });
 	};
 
-	uploadFile = async (e) => {
-		const files = e.target.files;
+	UploadPhoto = async (e) => {
 		const data = new FormData();
-		data.append('file', files[0]);
+		if (typeof this.state.preview === "undefined") return;
+		data.append('file', this.state.preview);
 		data.append('upload_preset', 'sicovi');
 		const res = await fetch('https://api.cloudinary.com/v1_1/ddltr8h2k/image/upload', {
 			method: 'POST',
@@ -81,12 +81,15 @@ class UpdateVisitor extends Component {
 		const file = await res.json();
 		this.setState({
 			image: file.secure_url,
-			largeImage: file.eager[0].secure_url
+		  largeImage: file.eager[0].secure_url
 		});
-	};
+	}
 
 	updateVisitor = async (e, updateVisitorMutation, visitorType) => {
 		e.preventDefault();
+		this.setState({disabled: true});
+		//Upload Photo
+		await this.UploadPhoto();
 		const res = await updateVisitorMutation({
 			variables: {
 				id: this.props.id,
@@ -121,30 +124,10 @@ class UpdateVisitor extends Component {
 									<div className="title">Actualiza Visitante {visitorType}</div>
 									<fieldset className="fields" disabled={loading} aria-busy={loading}>
 										{visitorType !== 'servicio' && (
-											<label htmlFor="file">
-												Foto
-												<input
-													type="file"
-													id="file"
-													name="file"
-													placeholder="Foto del Visitante"
-													onChange={this.uploadFile}
-												/>
-												<img
-													className="ui circular bordered image"
-													width="100"
-													height="100"
-													src={
-														this.state.image ||
-														data.visitor.image ||
-														'../static/user_gray.png'
-													}
-													alt="Agrega una foto"
-												/>
-												<FotoVisitor>
-													<Icon name="camera" />
-												</FotoVisitor>
-											</label>
+											<PhotoCropper
+												preview={this.state.preview || data.visitor.image}
+												updateSrc={(preview) => this.setState({ preview })}
+											/>
 										)}
 										<label htmlFor="name">
 											Nombre {visitorType === 'servicio' && 'de la Empresa'}
@@ -207,8 +190,8 @@ class UpdateVisitor extends Component {
 												onChange={this.handleChange}
 											/>
 										</label>
-										<button className="ui positive button" type="submit">
-											Guarda{loading ? 'ndo' : 'r'} Cambios
+										<button disabled={this.state.disabled} className="ui positive button" type="submit">
+											Guarda{this.state.disabled ? 'ndo' : 'r'} Cambios
 										</button>
 									</fieldset>
 								</Form>

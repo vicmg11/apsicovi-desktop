@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
@@ -7,7 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react';
 import Error from './ErrorMessage';
 import Form from './styles/Form';
-import FotoVisitor from './styles/FotoVisitor';
+import PhotoCropper from './PhotoCropper';
 
 const CREATE_VISIT_MUTATION = gql`
 	mutation CREATE_VISIT_AUTH_MUTATION(
@@ -47,6 +48,8 @@ class CrearVisitante extends Component {
 		expectedStartDate: '',
 		expectedStartTime: '',
 		expectedEndTime: '',
+		preview: null,
+		disabled: false
 	};
 
 	handleChange = (e) => {
@@ -61,25 +64,21 @@ class CrearVisitante extends Component {
 		}
 	};
 
-	uploadFile = async (e) => {
-		console.log('uploadFile')
-		const files = e.target.files;
+	UploadPhoto = async (e) => {
 		const data = new FormData();
-		data.append('file', files[0]);
-		console.log(files[0])
+		if (typeof this.state.preview === "undefined") return;
+		data.append('file', this.state.preview);
 		data.append('upload_preset', 'sicovi');
-		console.log(data)
-		// const res = await fetch('https://api.cloudinary.com/v1_1/ddltr8h2k/image/upload', {
-		// 	method: 'POST',
-		// 	body: data
-		// });
-		//const file = await res.json();
+		const res = await fetch('https://api.cloudinary.com/v1_1/ddltr8h2k/image/upload', {
+			method: 'POST',
+			body: data
+		});
+		const file = await res.json();
 		this.setState({
 			image: file.secure_url,
-		  //largeImage: file.eager[0].secure_url
+			largeImage: file.eager[0].secure_url,
 		});
-	};
- 
+	}
 
 	render() {
 		const { visitorType } = this.props;
@@ -89,8 +88,11 @@ class CrearVisitante extends Component {
 					<Form
 						className="ui form"
 						onSubmit={async (e) => {
+							this.setState({disabled: true});
 							// Stop de form from submitting
 							e.preventDefault();
+							//Upload Photo
+					  	await this.UploadPhoto();
 							// call the mutation
 							const res = await createVisitor();
 							Router.push({
@@ -102,28 +104,12 @@ class CrearVisitante extends Component {
 						<div className="title">Visitantes {visitorType}s</div>
 						<fieldset className="fields" disabled={loading} aria-busy={loading}>
 							{visitorType !== 'servicio' && (
-								<label className="photo" htmlFor="file">
-									Foto
-									<input
-										type="file"
-										id="file"
-										name="file"
-										placeholder="Foto del Visitante"
-										onChange={this.uploadFile}
-									/>
-						   
-									<img
-										className="ui circular bordered image"
-										width="100"
-										height="100"
-										src={this.state.image || '../static/user_gray.png'}
-										alt="Agrega una foto"
-									/>
-									<FotoVisitor>
-										<Icon name="camera" />
-									</FotoVisitor>
-								</label>
-							)}
+								<PhotoCropper
+									preview={this.state.preview}
+									updateSrc={(preview)=>this.setState({preview})}
+								/>
+ 							)}
+
 							<label htmlFor="name">
 								Nombre {visitorType === 'servicio' && 'de la Empresa'}
 								<input
@@ -189,8 +175,8 @@ class CrearVisitante extends Component {
 									</label>
 								</>
 							)}
-							<button className="ui positive button" type="submit">
-								Guardar
+							<button disabled={this.state.disabled} className="ui positive button" type="submit">
+								Guarda{this.state.disabled ? 'ndo' : 'r'} Cambios
 							</button>
 						</fieldset>
 					</Form>
