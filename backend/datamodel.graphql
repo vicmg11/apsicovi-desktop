@@ -10,6 +10,7 @@ enum Status {
   INACTIVE
 }
 
+# No need this Enums
 # enum visitorTypes {
 #   PREAUTORIZADO
 #   FRECUENTE
