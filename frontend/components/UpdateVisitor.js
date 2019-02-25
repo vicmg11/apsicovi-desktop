@@ -6,6 +6,7 @@ import Router from 'next/router';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import PhotoCropper from './PhotoCropper';
+import { isNull } from 'util';
 
 const SINGLE_VISITOR_QUERY = gql`
 	query SINGLE_VISITOR_QUERY($id: ID!) {
@@ -71,7 +72,7 @@ class UpdateVisitor extends Component {
 
 	UploadPhoto = async (e) => {
 		const data = new FormData();
-		if (typeof this.state.preview === "undefined") return;
+		if (isNull(this.state.preview)) return;
 		data.append('file', this.state.preview);
 		data.append('upload_preset', 'sicovi');
 		const res = await fetch('https://api.cloudinary.com/v1_1/ddltr8h2k/image/upload', {

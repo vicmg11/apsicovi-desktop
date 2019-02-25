@@ -1,5 +1,5 @@
-# source: http://localhost:4466
-# timestamp: Sat Feb 09 2019 23:09:49 GMT-0800 (PST)
+# source: https://appsicovi-prod-0d44c29728.herokuapp.com/sicovi-prod/prod
+# timestamp: Sun Feb 24 2019 23:11:02 GMT-0800 (PST)
 
 type AggregateUser {
   count: Int!
@@ -23,18 +23,18 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
   createVisitor(data: VisitorCreateInput!): Visitor!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  createUser(data: UserCreateInput!): User!
   updateVisitor(data: VisitorUpdateInput!, where: VisitorWhereUniqueInput!): Visitor
-  deleteUser(where: UserWhereUniqueInput!): User
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteVisitor(where: VisitorWhereUniqueInput!): Visitor
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
   upsertVisitor(where: VisitorWhereUniqueInput!, create: VisitorCreateInput!, update: VisitorUpdateInput!): Visitor!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyVisitors(data: VisitorUpdateInput!, where: VisitorWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyVisitors(data: VisitorUpdateManyMutationInput!, where: VisitorWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyVisitors(where: VisitorWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -72,12 +72,12 @@ enum Permission {
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   visitors(where: VisitorWhereInput, orderBy: VisitorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Visitor]!
-  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   visitor(where: VisitorWhereUniqueInput!): Visitor
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  user(where: UserWhereUniqueInput!): User
   visitorsConnection(where: VisitorWhereInput, orderBy: VisitorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VisitorConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -92,8 +92,8 @@ enum Status {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   visitor(where: VisitorSubscriptionWhereInput): VisitorSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
@@ -105,11 +105,11 @@ type User implements Node {
   host: String
   expirationDate: DateTime
   database: String
-  status: [Status!]
+  status: [Status!]!
   password: String!
   resetToken: String
   resetTokenExpiry: String
-  permissions: [Permission!]
+  permissions: [Permission!]!
 }
 
 """A connection to a list of items."""
@@ -197,11 +197,11 @@ type UserPreviousValues {
   host: String
   expirationDate: DateTime
   database: String
-  status: [Status!]
+  status: [Status!]!
   password: String!
   resetToken: String
   resetTokenExpiry: String
-  permissions: [Permission!]
+  permissions: [Permission!]!
 }
 
 type UserSubscriptionPayload {
@@ -273,10 +273,24 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
 }
 
-input UserUpdateOneInput {
+input UserUpdateManyMutationInput {
+  streetId: Int
+  name: String
+  email: String
+  price: Int
+  host: String
+  expirationDate: DateTime
+  database: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  status: UserUpdatestatusInput
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateOneRequiredInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  delete: Boolean
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
 }
@@ -703,11 +717,11 @@ type Visitor implements Node {
   image: String
   largeImage: String
   description: String
-  status: [Status!]
+  status: [Status!]!
   expectedStartTime: String
   expectedEndTime: String
   expectedStartDate: String
-  user(where: UserWhereInput): User!
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -778,7 +792,7 @@ type VisitorPreviousValues {
   image: String
   largeImage: String
   description: String
-  status: [Status!]
+  status: [Status!]!
   expectedStartTime: String
   expectedEndTime: String
   expectedStartDate: String
@@ -833,7 +847,19 @@ input VisitorUpdateInput {
   expectedEndTime: String
   expectedStartDate: String
   status: VisitorUpdatestatusInput
-  user: UserUpdateOneInput
+  user: UserUpdateOneRequiredInput
+}
+
+input VisitorUpdateManyMutationInput {
+  name: String
+  visitorType: String
+  image: String
+  largeImage: String
+  description: String
+  expectedStartTime: String
+  expectedEndTime: String
+  expectedStartDate: String
+  status: VisitorUpdatestatusInput
 }
 
 input VisitorUpdatestatusInput {

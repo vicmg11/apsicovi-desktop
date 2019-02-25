@@ -5,6 +5,23 @@ const { promisify } = require('util');
 const { transporter, makeAnEmail } = require('../mail');
 
 const mutations = {
+	// async createUser(parent, args, ctx, info) {
+	// 	if (!ctx.request.userId) {
+	// 		throw new Error('Acción no permitida, introducir email y contraseña para proseguir.');
+	// 	}
+	// 	const user = await ctx.db.mutation.createUser(
+	// 		{
+	// 			data: {
+	// 				...args,
+	// 				status: { set: [ 'ACTIVE' ] }
+	// 			}
+	// 		},
+	// 		info
+	// 	);
+
+	// 	return user;
+	// },
+
 	async createVisitor(parent, args, ctx, info) {
 		if (!ctx.request.userId) {
 			throw new Error('Acción no permitida, introducir email y contraseña para proseguir.');

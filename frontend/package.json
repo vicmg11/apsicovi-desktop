@@ -9,7 +9,8 @@
     "start": "next start",
     "test": "NODE_ENV=test jest --watch",
     "test-win": "SET NODE_ENV=test&& jest --watch",
-    "heroku-postbuild": "next build"
+    "heroku-postbuild": "next build",
+    "now-build": "next build"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +27,7 @@
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "lodash.debounce": "^4.0.8",
-    "next": "^7.0.3",
+    "next": "^8.0.3",
     "next-with-apollo": "^3.3.2",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
@@ -35,6 +36,7 @@
     "react-apollo": "^2.4.1",
     "react-avatar-edit": "^0.7.1",
     "react-dom": "^16.8.2",
+    "react-final-form": "^4.0.2",
     "react-mobiscroll": "^0.4.0",
     "react-stripe-checkout": "^2.6.3",
     "react-transition-group": "^2.5.3",
