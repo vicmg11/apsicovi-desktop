@@ -22,7 +22,7 @@ type User {
   id: ID! @unique
   streetId: Int
   name: String!
-  email: String! @unique
+  email: String!
   price: Int
   host: String
   expirationDate: DateTime
@@ -35,7 +35,7 @@ type User {
 }
 
 type Visitor {
-  id: ID! @unique
+  id: ID!
   name: String!
   visitorType: String!
   image: String
