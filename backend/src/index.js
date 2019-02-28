@@ -1,4 +1,31 @@
-const server = require("./server");
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config({ path: 'variables.env' });
+const createServer = require('./createServer');
+const db = require('./db');
+
+// ncc adds this file at the app root (aka __dirname)
+const fs = require('fs');
+const path = require('path');
+const {importSchema} = require('graphql-import');
+fs.readFileSync(path.join(__dirname, "/prisma.graphql"))
+const typeDefs = importSchema(path.join(__dirname, "/schema.graphql"));
+
+const server = createServer();
+//Middleware to handle cookies (JWT)
+server.express.use(cookieParser());
+//decode the jwt token to get the user Id
+server.express.use((req, res, next) => {
+	const { token } = req.cookies;
+	if (token) { 
+		const {userId} = jwt.verify(token, process.env.APP_SECRET);
+		//put the userId onto the req for future requests to access
+		req.userId = userId;
+	}
+	//next pass along the request
+	next();
+})
 
 server.start(
 	{

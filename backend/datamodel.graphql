@@ -10,7 +10,6 @@ enum Status {
   INACTIVE
 }
 
-# No need this Enums
 # enum visitorTypes {
 #   PREAUTORIZADO
 #   FRECUENTE
@@ -22,7 +21,7 @@ type User {
   id: ID! @unique
   streetId: Int
   name: String!
-  email: String!
+  email: String! @unique
   price: Int
   host: String
   expirationDate: DateTime
@@ -35,7 +34,7 @@ type User {
 }
 
 type Visitor {
-  id: ID!
+  id: ID! @unique
   name: String!
   visitorType: String!
   image: String

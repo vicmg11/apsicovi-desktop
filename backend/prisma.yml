@@ -1,7 +1,12 @@
 #endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://appsicovi-prod-0d44c29728.herokuapp.com/sicovi-prod/prod
+endpoint: https://sicovi-app-prod-3ffeb41078.herokuapp.com/sicovi-app-prod/prod
 datamodel: datamodel.graphql
 secret: ${env:PRISMA_SECRET}
+generate:
+  - generator: typescript-client
+    output: ../src/generated/prisma-client
+  - generator: graphql-schema
+    output: ../src/
 hooks:
   post-deploy:
       - graphql get-schema -p prisma
