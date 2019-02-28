@@ -1,4 +1,4 @@
-# import xxxx-not-used from './generated/prisma.graphql'
+# import xxxx-not-used from './generated/prisma.graphql-not used'
 
 type SuccessMessage {
 	message: String
