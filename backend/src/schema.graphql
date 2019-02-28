@@ -1,4 +1,4 @@
-# import xxxx-not-used from './generated/prisma.graphql-not used'
+# import Something from "./prisma.graphql"
 
 type SuccessMessage {
 	message: String
@@ -16,6 +16,7 @@ type Mutation {
 		expectedEndTime: String
 		expectedStartDate: String
 	): Visitor!
+
 	updateVisitor(
 		id: ID!
 		name: String
@@ -27,9 +28,10 @@ type Mutation {
 		expectedEndTime: String
 		expectedStartDate: String
 	): Visitor!
+
 	signup(email: String!, password: String!, name: String!) : User!
 	signin(email: String!, password: String!) : User!
-	signout: SuccessMessage
+	signout: SuccessMessage 
 	requestReset(email: String!): SuccessMessage
 	resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
 	updateVisitorStatus(status: [Status], id: ID!): Visitor
@@ -47,3 +49,4 @@ type User {
 	email: String!
 	permissions: [Permission!]!
 }
+ 

@@ -9,4 +9,5 @@ generate:
     output: ../src/
 hooks:
   post-deploy:
+      - echo "Deployment finished"
       - graphql get-schema -p prisma

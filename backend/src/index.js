@@ -1,16 +1,10 @@
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+//const grapqlServer = require("./server");
 
 require('dotenv').config({ path: 'variables.env' });
 const createServer = require('./createServer');
 const db = require('./db');
-
-// ncc adds this file at the app root (aka __dirname) 
-const fs = require('fs');
-const path = require('path');
-const {importSchema} = require('graphql-import');
-fs.readFileSync(path.join(__dirname, "/prisma.graphql"))
-const typeDefs = importSchema(path.join(__dirname, "/schema.graphql"));
 
 const server = createServer();
 //Middleware to handle cookies (JWT)
@@ -25,7 +19,7 @@ server.express.use((req, res, next) => {
 	}
 	//next pass along the request
 	next();
-})
+});
 
 server.start(
 	{
@@ -38,3 +32,4 @@ server.start(
 		console.log(`Server is now running on port http:/localhost:${deets.port}`);
 	}
 );
+
