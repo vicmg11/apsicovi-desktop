@@ -1,5 +1,5 @@
 #endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://sicovi-app-prod-3ffeb41078.herokuapp.com/sicovi-app-prod/prod
+endpoint: https://sicoviapp-prod-6be02debc0.herokuapp.com/sicoviapp-production/prod
 datamodel: datamodel.graphql
 secret: ${env:PRISMA_SECRET}
 generate:

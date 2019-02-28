@@ -5,7 +5,7 @@ require('dotenv').config({ path: 'variables.env' });
 const createServer = require('./createServer');
 const db = require('./db');
 
-// ncc adds this file at the app root (aka __dirname)
+// ncc adds this file at the app root (aka __dirname) 
 const fs = require('fs');
 const path = require('path');
 const {importSchema} = require('graphql-import');
