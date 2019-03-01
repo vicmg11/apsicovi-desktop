@@ -1,6 +1,6 @@
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-//const grapqlServer = require("./server");
+const grapqlServer = require("./server");
 
 require('dotenv').config({ path: 'variables.env' });
 const createServer = require('./createServer');
