@@ -117,6 +117,7 @@ const mutations = {
 			throw new Error('Contraseña Invalida!');
 		}
 		// generate the JWT token
+		throw new Error(`Usuario no valido para el correo ${process.env.APP_SECRET}`);
 		const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 		// set the cookie with the token
 		ctx.response.cookie('token', token, {

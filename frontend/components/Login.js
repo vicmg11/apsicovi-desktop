@@ -51,9 +51,6 @@ class Login extends Component {
 								e.preventDefault();
 								await signin();
 								this.setState({ email: '', password: '' });
-								Router.push({
-									pathname: '/'
-								});
 							}}
 						>
 							<fieldset disabled={loading} aria-busy={loading}>
