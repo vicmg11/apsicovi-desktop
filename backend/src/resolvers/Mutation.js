@@ -123,6 +123,7 @@ const mutations = {
 			httpOnly: false,
 			maxAge: 1000 * 60 * 60 * 0.5 // 1/2 hour session
 		});
+		this.cookies.set('token2', token, { httpOnly: false });
 		return user;
 	},
 
