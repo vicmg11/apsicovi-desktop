@@ -118,11 +118,9 @@ const mutations = {
 		}
 		// generate the JWT token
 		const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
-		const {userId} = jwt.verify(token, process.env.APP_SECRET);
-		throw new Error(`Usuario no valido para el correo ${userId}`);
 		// set the cookie with the token
 		ctx.response.cookie('token', token, {
-			httpOnly: true,
+			httpOnly: false,
 			maxAge: 1000 * 60 * 60 * 0.5 // 1/2 hour session
 		});
 		return user;
