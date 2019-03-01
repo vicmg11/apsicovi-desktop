@@ -123,7 +123,6 @@ const mutations = {
 			httpOnly: true,
 			maxAge: 1000 * 60 * 60 * 0.5 // 1/2 hour session
 		});
-		throw new Error(`Usuario ------> ${user.name}  `);
 		return user;
 	},
 

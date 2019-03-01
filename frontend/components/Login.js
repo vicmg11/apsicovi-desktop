@@ -49,7 +49,8 @@ class Login extends Component {
 							className="ui form"
 							onSubmit={async (e) => {
 								e.preventDefault();
-								await signin();
+								console.log(await signin());
+								console.log('user')
 								this.setState({ email: '', password: '' });
 							}}
 						>
