@@ -49,9 +49,11 @@ class Login extends Component {
 							className="ui form"
 							onSubmit={async (e) => {
 								e.preventDefault();
-								console.log(await signin());
-								console.log('user')
+								await signin();
 								this.setState({ email: '', password: '' });
+								Router.push({
+									pathname: '/'
+								});
 							}}
 						>
 							<fieldset disabled={loading} aria-busy={loading}>
