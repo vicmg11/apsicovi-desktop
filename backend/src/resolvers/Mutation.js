@@ -116,15 +116,14 @@ const mutations = {
 		if (!valid) {
 			throw new Error('Contraseña Invalida!');
 		}
+		throw new Error(`Usuario ------> ${user.name}`);
 		// generate the JWT token
 		const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 		// set the cookie with the token
-		console.log('122')
 		ctx.response.cookie('token', token, {
 			httpOnly: true,
 			maxAge: 1000 * 60 * 60 * 0.5 // 1/2 hour session
 		});
-		console.log('126',user)
 		return user;
 	},
 
