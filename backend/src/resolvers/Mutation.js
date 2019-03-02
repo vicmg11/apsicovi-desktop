@@ -119,11 +119,11 @@ const mutations = {
 		// generate the JWT token
 		const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 		// set the cookie with the token
-		ctx.response.set('Access-Control-Allow-Credentials', true);
 		ctx.response.cookie('token', token, {
 			httpOnly: false,
 			maxAge: 1000 * 60 * 60 * 0.5 // 1/2 hour session
 		});
+		ctx.response.status(200).send({ user, token: jwt.token });
 		return user;
 	},
 
