@@ -123,7 +123,6 @@ const mutations = {
 			httpOnly: false,
 			maxAge: 1000 * 60 * 60 * 0.5 // 1/2 hour session
 		});
-		ctx.response.status(200).send({ user, token: jwt.token });
 		return user;
 	},
 

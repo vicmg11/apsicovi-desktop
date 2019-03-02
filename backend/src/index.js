@@ -17,16 +17,19 @@ server.express.use((req, res, next) => {
 		//put the userId onto the req for future requests to access
 		req.userId = userId;
 	}
+	res.header('Access-Control-Allow-Origin', req.headers.origin);
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+ 
 	//next pass along the request
 	next();
 });
 
 server.start(
 	{
-		cors: {
-			credentials: true,
-			origin: process.env.FRONTEND_URL
-		}
+		// cors: {
+		// 	credentials: true,
+		// 	origin: process.env.FRONTEND_URL
+		// }
 	},
 	(deets) => {
 		console.log(`Server is now running on port http:/localhost:${deets.port}`);
