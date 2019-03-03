@@ -27,7 +27,7 @@ function PhotoCropper(props) {
 	};
 
 	const onBeforeFileLoad = (elem) => {
-		if (elem.target.files[0].size > 391680) {
+		if (elem.target.files[0].size > 1991680) {
 			alert('File is too big!');
 			elem.target.value = '';
 		}

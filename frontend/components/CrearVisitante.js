@@ -103,77 +103,89 @@ class CrearVisitante extends Component {
 					>
 						<Error error={error} />
 						<div className="title">Visitantes {visitorType}s</div>
-						<fieldset className="fields" disabled={loading} aria-busy={loading}>
+						<fieldset disabled={loading} aria-busy={loading}>
 							{visitorType !== 'servicio' && !loading && (
-								<PhotoCropper
-									preview={this.state.preview}
-									updateSrc={(preview)=>this.setState({preview})}
-								/>
+								<div className="field">
+									<PhotoCropper
+										preview={this.state.preview}
+										updateSrc={(preview)=>this.setState({preview})}
+									/>
+								</div>
  							)}
 
-							<label htmlFor="name">
-								Nombre {visitorType === 'servicio' && 'de la Empresa'}
-								<input
-									type="text"
-									id="name"
-									name="name"
-									placeholder="Nombre"
-									required
-									value={this.state.name}
-									onChange={this.handleChange}
-								/>
-							</label>
+							<div className="field">
+								<label htmlFor="name">
+									Nombre {visitorType === 'servicio' && 'de la Empresa'}
+									<input
+										type="text"
+										id="name"
+										name="name"
+										placeholder="Nombre"
+										required
+										value={this.state.name}
+										onChange={this.handleChange}
+									/>
+								</label>
+							</div>
 
 							{visitorType !== 'frecuente' && (
 								<>
-									<label htmlFor="expectedStartDate">
-										Fecha de Visita
-										<DateInput
-											name="expectedStartDate"
-											placeholder="Fecha de Visita"
-											required
-											value={this.state.expectedStartDate}
-											iconPosition="left"
-											onChange={this.handleChangeDt}
-										/>
-									</label>
+								  <div className="field"> 
+										<label htmlFor="expectedStartDate">
+											Fecha de Visita
+											<DateInput
+												name="expectedStartDate"
+												placeholder="Fecha de Visita"
+												required
+												value={this.state.expectedStartDate}
+												iconPosition="left"
+												onChange={this.handleChangeDt}
+											/>
+										</label>
+									</div>
 
-									<label htmlFor="expectedStartTime">
-										Hora Inicial de Visita
-										<TimeInput
-											name="expectedStartTime"
-											placeholder="Hora Inicial de Visita"
-											required
-											value={this.state.expectedStartTime}
-											iconPosition="left"
-											onChange={this.handleChangeDt}
-										/>
-									</label>
+									<div className="field">
+										<label htmlFor="expectedStartTime">
+											Hora Inicial de Visita
+											<TimeInput
+												name="expectedStartTime"
+												placeholder="Hora Inicial de Visita"
+												required
+												value={this.state.expectedStartTime}
+												iconPosition="left"
+												onChange={this.handleChangeDt}
+											/>
+										</label>
+									</div>
 
-									<label htmlFor="expectedEndTime">
-										Hora Final de Visita
-										<TimeInput
-											name="expectedEndTime"
-											placeholder="Hora final de visita"
-											required
-											value={this.state.expectedEndTime}
-											iconPosition="left"
-											onChange={this.handleChangeDt}
-										/>
-									</label>
+									<div className="field"> 
+										<label htmlFor="expectedEndTime">
+											Hora Final de Visita
+											<TimeInput
+												name="expectedEndTime"
+												placeholder="Hora final de visita"
+												required
+												value={this.state.expectedEndTime}
+												iconPosition="left"
+												onChange={this.handleChangeDt}
+											/>
+										</label>
+									</div>
 
-									<label htmlFor="description">
-										Motivo de Visita
-										<textarea
-											id="description"
-											name="description"
-											rows="2"
-											placeholder="Motivo de Visita"
-											required
-											value={this.state.description}
-											onChange={this.handleChange}
-										/>
-									</label>
+									<div className="field">	
+										<label htmlFor="description">
+											Motivo de Visita
+											<textarea
+												id="description"
+												name="description"
+												rows="2"
+												placeholder="Motivo de Visita"
+												required
+												value={this.state.description}
+												onChange={this.handleChange}
+											/>
+										</label>
+									</div>
 								</>
 							)}
 							<button disabled={this.state.disabled} className="ui positive button" type="submit">
