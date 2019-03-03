@@ -33,6 +33,7 @@ const Form = styled.form`
 	textarea,
 	select {
 		width: 100%;
+		max-width: 90%
 		padding: 0.5rem;
 		border: 1px solid black;
 		&:focus {

@@ -50,12 +50,14 @@ injectGlobal`
     box-sizing: inherit;
   }
   body {
-    padding: 0;
+    padding-top: 0;
     margin: 0;
     font-size: 1.5rem;
     line-height: 2;
 		font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 		background-color: #f4f4f4;
+		padding-left: 5%;
+  	padding-right: 5%;
   }
   a {
     text-decoration: none;
