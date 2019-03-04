@@ -56,8 +56,6 @@ injectGlobal`
     line-height: 2;
 		font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 		background-color: #f4f4f4;
-		padding-left: 5%;
-  	padding-right: 5%;
   }
   a {
     text-decoration: none;

@@ -105,15 +105,15 @@ class CrearVisitante extends Component {
 						<div className="title">Visitantes {visitorType}s</div>
 						<fieldset disabled={loading} aria-busy={loading}>
 							{visitorType !== 'servicio' && !loading && (
-								<div className="field">
+							 
 									<PhotoCropper
 										preview={this.state.preview}
 										updateSrc={(preview)=>this.setState({preview})}
 									/>
-								</div>
+								 
  							)}
 
-							<div className="field">
+	 
 								<label htmlFor="name">
 									Nombre {visitorType === 'servicio' && 'de la Empresa'}
 									<input
@@ -126,11 +126,11 @@ class CrearVisitante extends Component {
 										onChange={this.handleChange}
 									/>
 								</label>
-							</div>
+							 
 
 							{visitorType !== 'frecuente' && (
 								<>
-								  <div className="field"> 
+								   
 										<label htmlFor="expectedStartDate">
 											Fecha de Visita
 											<DateInput
@@ -142,9 +142,9 @@ class CrearVisitante extends Component {
 												onChange={this.handleChangeDt}
 											/>
 										</label>
-									</div>
+									 
 
-									<div className="field">
+								 
 										<label htmlFor="expectedStartTime">
 											Hora Inicial de Visita
 											<TimeInput
@@ -156,9 +156,9 @@ class CrearVisitante extends Component {
 												onChange={this.handleChangeDt}
 											/>
 										</label>
-									</div>
+								 
 
-									<div className="field"> 
+						 
 										<label htmlFor="expectedEndTime">
 											Hora Final de Visita
 											<TimeInput
@@ -170,9 +170,8 @@ class CrearVisitante extends Component {
 												onChange={this.handleChangeDt}
 											/>
 										</label>
-									</div>
-
-									<div className="field">	
+							 
+ 
 										<label htmlFor="description">
 											Motivo de Visita
 											<textarea
@@ -185,7 +184,7 @@ class CrearVisitante extends Component {
 												onChange={this.handleChange}
 											/>
 										</label>
-									</div>
+								 
 								</>
 							)}
 							<button disabled={this.state.disabled} className="ui positive button" type="submit">
