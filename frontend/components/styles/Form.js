@@ -16,15 +16,10 @@ const Form = styled.form`
 	/* box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05); */
 	/* background: rgba(0, 0, 0, 0.02); */
 	/* border: 5px solid white; */
-	padding: 0 25px;
-	max-width: 500px;
-	margin: 50px auto;
 		
-	/* padding: 10px; */
 	font-size: 1.3rem !important;
 	line-height: 1.5;
 	font-weight: 600;
-  /* margin-top: 20px; */
 	label {
 		display: block;
 		margin-bottom: 1rem;
@@ -37,7 +32,6 @@ const Form = styled.form`
 	textarea,
 	select {
 		width: 100%;
-		max-width: 90%;
 		padding: 0.5rem;
 		border: 1px solid black;
 		&:focus {

@@ -130,7 +130,6 @@ class CrearVisitante extends Component {
 
 							{visitorType !== 'frecuente' && (
 								<>
-								   
 										<label htmlFor="expectedStartDate">
 											Fecha de Visita
 											<DateInput
@@ -142,8 +141,6 @@ class CrearVisitante extends Component {
 												onChange={this.handleChangeDt}
 											/>
 										</label>
-									 
-
 								 
 										<label htmlFor="expectedStartTime">
 											Hora Inicial de Visita
@@ -156,8 +153,6 @@ class CrearVisitante extends Component {
 												onChange={this.handleChangeDt}
 											/>
 										</label>
-								 
-
 						 
 										<label htmlFor="expectedEndTime">
 											Hora Final de Visita
@@ -170,7 +165,6 @@ class CrearVisitante extends Component {
 												onChange={this.handleChangeDt}
 											/>
 										</label>
-							 
  
 										<label htmlFor="description">
 											Motivo de Visita
