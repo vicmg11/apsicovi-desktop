@@ -10,7 +10,7 @@ import styled from 'styled-components';
 
 const Disable = styled.span`
 	font-size: 12px;
-	color: #cccccc;
+	color: #cccccc; 
 	padding-left: 5px;
 `;
 
